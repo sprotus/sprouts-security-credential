@@ -10,15 +10,17 @@
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
         <maven.compiler.release>11</maven.compiler.release>
+        <!-- dependency -->
+        <jackson.version>2.14.2</jackson.version>
+        <jjwt.version>0.11.5</jjwt.version>
+        <bcprov.version>1.75</bcprov.version>
         <!-- plugin -->
         <maven.compiler.plugin.version>3.11.0</maven.compiler.plugin.version>
         <maven.resources.plugin.version>3.3.1</maven.resources.plugin.version>
         <maven.surefire.plugin.version>2.22.2</maven.surefire.plugin.version>
         <junit.platform.surefire.provider.version>1.2.0</junit.platform.surefire.provider.version>
-        <!-- dependency -->
-        <jackson.version>2.14.2</jackson.version>
-        <jjwt.version>0.11.5</jjwt.version>
-        <bcprov.version>1.75</bcprov.version>
+        <build.helper.maven.plugin.version>3.3.0</build.helper.maven.plugin.version>
+        <versions.maven.plugin.version>2.10.0</versions.maven.plugin.version>
         <!-- test -->
         <junit.jupiter.version>5.9.3</junit.jupiter.version>
     </properties>
@@ -99,6 +101,88 @@
                     </additionalClasspathElements>
                 </configuration>
             </plugin>
+            <plugin>
+                <groupId>org.codehaus.mojo</groupId>
+                <artifactId>build-helper-maven-plugin</artifactId>
+                <version>${build.helper.maven.plugin.version}</version>
+                <executions>
+                    <execution>
+                        <id>parse-version</id>
+                        <goals>
+                            <goal>parse-version</goal>
+                        </goals>
+                    </execution>
+                </executions>
+            </plugin>
+            <plugin>
+                <groupId>org.codehaus.mojo</groupId>
+                <artifactId>versions-maven-plugin</artifactId>
+                <version>${versions.maven.plugin.version}</version>
+            </plugin>
         </plugins>
     </build>
+    <profiles>
+        <profile>
+            <id>snapshot-patch</id>
+            <activation>
+                <property>
+                    <name>snapshotPatch</name>
+                </property>
+            </activation>
+            <build>
+                <plugins>
+                    <plugin>
+                        <groupId>org.codehaus.mojo</groupId>
+                        <artifactId>versions-maven-plugin</artifactId>
+                        <version>${versions.maven.plugin.version}</version>
+                        <executions>
+                            <execution>
+                                <goals>
+                                    <goal>set</goal>
+                                </goals>
+                                <phase>validate</phase>
+                                <configuration>
+                                    <newVersion>
+                                        <!--suppress UnresolvedMavenProperty -->
+                                        ${parsedVersion.majorVersion}.${parsedVersion.minorVersion}.${parsedVersion.nextIncrementalVersion}-SNAPSHOT
+                                    </newVersion>
+                                </configuration>
+                            </execution>
+                        </executions>
+                    </plugin>
+                </plugins>
+            </build>
+        </profile>
+        <profile>
+            <id>release-patch</id>
+            <activation>
+                <property>
+                    <name>releasePatch</name>
+                </property>
+            </activation>
+            <build>
+                <plugins>
+                    <plugin>
+                        <groupId>org.codehaus.mojo</groupId>
+                        <artifactId>versions-maven-plugin</artifactId>
+                        <version>${versions.maven.plugin.version}</version>
+                        <executions>
+                            <execution>
+                                <goals>
+                                    <goal>set</goal>
+                                </goals>
+                                <phase>validate</phase>
+                                <configuration>
+                                    <newVersion>
+                                        <!--suppress UnresolvedMavenProperty -->
+                                        ${parsedVersion.majorVersion}.${parsedVersion.minorVersion}.${parsedVersion.incrementalVersion}
+                                    </newVersion>
+                                </configuration>
+                            </execution>
+                        </executions>
+                    </plugin>
+                </plugins>
+            </build>
+        </profile>
+    </profiles>
 </project>
