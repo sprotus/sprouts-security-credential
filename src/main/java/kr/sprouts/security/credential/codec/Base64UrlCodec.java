@@ -3,11 +3,7 @@ package kr.sprouts.security.credential.codec;
 import java.util.Base64;
 
 class Base64UrlCodec implements Codec {
-    private Base64UrlCodec() { }
-
-    public static Base64UrlCodec create() {
-        return new Base64UrlCodec();
-    }
+    Base64UrlCodec() { }
 
     @Override
     public byte[] encode(byte[] decodedBytes) {

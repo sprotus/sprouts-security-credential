@@ -3,8 +3,8 @@ package kr.sprouts.security.credential.codec;
 import java.util.function.Supplier;
 
 public enum CodecType {
-    BASE64("BASE64", Base64Codec::create),
-    BASE64_URL("BASE64_URL", Base64UrlCodec::create),
+    BASE64("BASE64", Base64Codec::new),
+    BASE64_URL("BASE64_URL", Base64UrlCodec::new),
     ;
 
     private final String name;
