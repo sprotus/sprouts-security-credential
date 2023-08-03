@@ -123,6 +123,21 @@
     </build>
     <profiles>
         <profile>
+            <id>gitlab-package-registry-deploy</id>
+            <distributionManagement>
+                <repository>
+                    <id>gitlab-package-registry</id>
+                    <!--suppress UnresolvedMavenProperty -->
+                    <url>${CI_API_V4_URL}/projects/${CI_PROJECT_ID}/packages/maven/</url>
+                </repository>
+                <snapshotRepository>
+                    <id>gitlab-package-registry</id>
+                    <!--suppress UnresolvedMavenProperty -->
+                    <url>${CI_API_V4_URL}/projects/${CI_PROJECT_ID}/packages/maven/</url>
+                </snapshotRepository>
+            </distributionManagement>
+        </profile>
+        <profile>
             <id>snapshot-patch</id>
             <activation>
                 <property>
