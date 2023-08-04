@@ -11,7 +11,7 @@ public enum CipherAlgorithm {
     PBE_HS384_AES128("PBE_HS384_AES128", () -> new CipherWithPassword("PBEWithHmacSHA384AndAES_128", 16, 128, 128, 65534, 65534)),
     PBE_HS384_AES256("PBE_HS384_AES256", () -> new CipherWithPassword("PBEWithHmacSHA384AndAES_256", 16, 128, 256, 65534, 65534)),
     PBE_HS512_AES128("PBE_HS512_AES128", () -> new CipherWithPassword("PBEWithHmacSHA512AndAES_128", 16, 128, 128, 65534, 65534)),
-    PBE_HS512_AES256("PBE_HS512_AES256", () -> new CipherWithPassword("PBEWithHmacSHA384AndAES_128", 16, 128, 256, 65534, 65534)),
+    PBE_HS512_AES256("PBE_HS512_AES256", () -> new CipherWithPassword("PBEWithHmacSHA512AndAES_256", 16, 128, 256, 65534, 65534)),
     RSA("RSA", () -> new CipherWithKeyPair("RSA/ECB/PKCS1Padding", "RSA", 2048))
     ;
     private final String name;
