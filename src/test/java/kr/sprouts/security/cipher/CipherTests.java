@@ -1,7 +1,9 @@
 package kr.sprouts.security.cipher;
 
-import kr.sprouts.security.codec.Codec;
-import kr.sprouts.security.codec.CodecType;
+import kr.sprouts.security.credential.cipher.Cipher;
+import kr.sprouts.security.credential.cipher.CipherAlgorithm;
+import kr.sprouts.security.credential.codec.Codec;
+import kr.sprouts.security.credential.codec.CodecType;
 import org.junit.jupiter.api.Test;
 
 import javax.crypto.SecretKey;

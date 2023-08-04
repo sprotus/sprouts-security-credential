@@ -1,4 +1,4 @@
-package kr.sprouts.security.codec;
+package kr.sprouts.security.credential.codec;
 
 public interface Codec {
     byte[] encode(byte[] decodedBytes);

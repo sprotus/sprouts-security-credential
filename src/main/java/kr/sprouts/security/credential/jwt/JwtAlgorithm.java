@@ -1,4 +1,4 @@
-package kr.sprouts.security.jwt;
+package kr.sprouts.security.credential.jwt;
 
 import io.jsonwebtoken.SignatureAlgorithm;
 

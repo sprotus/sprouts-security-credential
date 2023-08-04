@@ -1,4 +1,4 @@
-package kr.sprouts.security.cipher;
+package kr.sprouts.security.credential.cipher;
 
 class CipherDecryptException extends RuntimeException {
     CipherDecryptException() { }
