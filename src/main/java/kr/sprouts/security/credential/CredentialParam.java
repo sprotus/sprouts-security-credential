@@ -1,6 +1,6 @@
 package kr.sprouts.security.credential;
 
-public abstract class CredentialParam {
+public class CredentialParam {
     Principal principal;
 
     public CredentialParam(Principal principal) {
