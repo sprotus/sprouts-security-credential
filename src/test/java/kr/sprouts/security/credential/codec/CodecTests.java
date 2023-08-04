@@ -1,7 +1,5 @@
-package kr.sprouts.security.codec;
+package kr.sprouts.security.credential.codec;
 
-import kr.sprouts.security.credential.codec.Codec;
-import kr.sprouts.security.credential.codec.CodecType;
 import org.junit.jupiter.api.Test;
 
 import java.nio.charset.StandardCharsets;
