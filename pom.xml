@@ -13,7 +13,6 @@
         <!-- dependency -->
         <jackson.version>2.14.2</jackson.version>
         <jjwt.version>0.11.5</jjwt.version>
-        <bcprov.version>1.75</bcprov.version>
         <!-- plugin -->
         <maven.compiler.plugin.version>3.11.0</maven.compiler.plugin.version>
         <maven.resources.plugin.version>3.3.1</maven.resources.plugin.version>
@@ -22,6 +21,7 @@
         <build.helper.maven.plugin.version>3.3.0</build.helper.maven.plugin.version>
         <versions.maven.plugin.version>2.10.0</versions.maven.plugin.version>
         <!-- test -->
+        <bouncycastle.version>1.70</bouncycastle.version>
         <junit.jupiter.version>5.9.3</junit.jupiter.version>
     </properties>
     <repositories>
@@ -48,12 +48,6 @@
             <artifactId>jjwt-jackson</artifactId>
             <version>${jjwt.version}</version>
         </dependency>
-        <!-- bcprov-ecdsa -->
-        <dependency>
-            <groupId>org.bouncycastle</groupId>
-            <artifactId>bcprov-jdk15to18</artifactId>
-            <version>${bcprov.version}</version>
-        </dependency>
         <!-- jackson-databind -->
         <dependency>
             <groupId>com.fasterxml.jackson.core</groupId>
@@ -61,6 +55,19 @@
             <version>${jackson.version}</version>
         </dependency>
 
+        <!-- Used only during testing for PS256, PS384 and PS512 since JDK <= 10 doesn't support them: -->
+        <dependency>
+            <groupId>org.bouncycastle</groupId>
+            <artifactId>bcprov-jdk15on</artifactId>
+            <version>${bouncycastle.version}</version>
+            <scope>test</scope>
+        </dependency>
+        <dependency>
+            <groupId>org.bouncycastle</groupId>
+            <artifactId>bcpkix-jdk15on</artifactId>
+            <version>${bouncycastle.version}</version>
+            <scope>test</scope>
+        </dependency>
         <!-- test -->
         <dependency>
             <groupId>org.junit.jupiter</groupId>
