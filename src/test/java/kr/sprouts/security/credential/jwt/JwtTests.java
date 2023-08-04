@@ -14,7 +14,7 @@ import java.time.LocalDateTime;
 import java.util.UUID;
 import java.util.logging.Logger;
 
-public class JwtTests {
+class JwtTests {
     Logger log = Logger.getLogger(this.getClass().getName());
     Codec codec = CodecType.BASE64_URL.getCodecSupplier().get();
 

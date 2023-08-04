@@ -10,7 +10,7 @@ import java.util.logging.Logger;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
-public class CipherTests {
+class CipherTests {
     Logger log = Logger.getLogger(this.getClass().getName());
     Codec codec = CodecType.BASE64_URL.getCodecSupplier().get();
     String plainText = "Plain text.";
