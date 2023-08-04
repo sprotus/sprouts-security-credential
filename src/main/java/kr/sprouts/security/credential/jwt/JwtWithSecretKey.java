@@ -19,7 +19,7 @@ class JwtWithSecretKey implements Jwt<SecretKey> {
     public SecretKey generateSecret() {
         try {
             return Keys.secretKeyFor(signatureAlgorithm);
-        } catch (Throwable e) {
+        } catch (RuntimeException e) {
             throw new JwtGenerateSecretException(e);
         }
     }
@@ -31,7 +31,7 @@ class JwtWithSecretKey implements Jwt<SecretKey> {
                     .setClaims(claims)
                     .signWith(new SecretKeySpec(secret, signatureAlgorithm.getJcaName()), signatureAlgorithm)
                     .compact();
-        } catch (Throwable e) {
+        } catch (RuntimeException e) {
             throw new JwtCreateException(e);
         }
     }
@@ -44,7 +44,7 @@ class JwtWithSecretKey implements Jwt<SecretKey> {
                     .build()
                     .parseClaimsJws(claimsJws)
                     .getBody();
-        } catch (Throwable e) {
+        } catch (RuntimeException e) {
             throw new JwtParseException(e);
         }
     }

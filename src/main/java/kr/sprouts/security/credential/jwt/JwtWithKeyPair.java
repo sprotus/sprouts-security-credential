@@ -7,6 +7,8 @@ import io.jsonwebtoken.security.Keys;
 
 import java.security.KeyFactory;
 import java.security.KeyPair;
+import java.security.NoSuchAlgorithmException;
+import java.security.spec.InvalidKeySpecException;
 import java.security.spec.PKCS8EncodedKeySpec;
 import java.security.spec.X509EncodedKeySpec;
 
@@ -21,7 +23,7 @@ class JwtWithKeyPair implements Jwt<KeyPair> {
     public KeyPair generateSecret() {
         try {
             return Keys.keyPairFor(signatureAlgorithm);
-        } catch (Throwable e) {
+        } catch (RuntimeException e) {
             throw new JwtGenerateSecretException(e);
         }
     }
@@ -33,7 +35,7 @@ class JwtWithKeyPair implements Jwt<KeyPair> {
                     .setClaims(claims)
                     .signWith(KeyFactory.getInstance(signatureAlgorithm.getFamilyName()).generatePrivate(new PKCS8EncodedKeySpec(privateKeyBytes)), signatureAlgorithm)
                     .compact();
-        } catch (Throwable e) {
+        } catch (NoSuchAlgorithmException | InvalidKeySpecException e) {
             throw new JwtCreateException(e);
         }
     }
@@ -46,7 +48,7 @@ class JwtWithKeyPair implements Jwt<KeyPair> {
                     .build()
                     .parseClaimsJws(claimsJws)
                     .getBody();
-        } catch (Throwable e) {
+        } catch (NoSuchAlgorithmException | InvalidKeySpecException e) {
             throw new JwtParseException(e);
         }
     }
