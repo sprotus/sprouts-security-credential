@@ -1,9 +1,7 @@
-package kr.sprouts.security.jwt;
+package kr.sprouts.security.credential.jwt;
 
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.Jwts;
-import kr.sprouts.security.credential.jwt.Jwt;
-import kr.sprouts.security.credential.jwt.JwtAlgorithm;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 
