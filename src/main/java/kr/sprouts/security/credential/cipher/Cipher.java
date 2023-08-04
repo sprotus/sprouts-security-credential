@@ -1,4 +1,4 @@
-package kr.sprouts.security.cipher;
+package kr.sprouts.security.credential.cipher;
 
 public interface Cipher<T> {
     T generateSecret();

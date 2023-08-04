@@ -1,4 +1,4 @@
-package kr.sprouts.security.jwt;
+package kr.sprouts.security.credential.jwt;
 
 class JwtGenerateSecretException extends RuntimeException {
     JwtGenerateSecretException(Throwable cause) {

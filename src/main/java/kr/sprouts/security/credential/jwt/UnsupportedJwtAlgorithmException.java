@@ -1,3 +1,3 @@
-package kr.sprouts.security.jwt;
+package kr.sprouts.security.credential.jwt;
 
 class UnsupportedJwtAlgorithmException extends RuntimeException { }
