@@ -2,8 +2,8 @@ package kr.sprouts.security.jwt;
 
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.Jwts;
-import kr.sprouts.security.codec.CodecType;
 import kr.sprouts.security.codec.Codec;
+import kr.sprouts.security.codec.CodecType;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 
