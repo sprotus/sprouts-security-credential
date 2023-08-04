@@ -1,4 +1,4 @@
-package kr.sprouts.security.credential.crypto;
+package kr.sprouts.security.credential.cipher;
 
 import javax.crypto.BadPaddingException;
 import javax.crypto.IllegalBlockSizeException;

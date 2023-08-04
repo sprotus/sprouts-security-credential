@@ -1,3 +1,3 @@
-package kr.sprouts.security.credential.crypto;
+package kr.sprouts.security.credential.cipher;
 
 class UnsupportedCipherAlgorithm extends RuntimeException { }

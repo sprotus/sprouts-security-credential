@@ -1,4 +1,4 @@
-package kr.sprouts.security.credential.crypto;
+package kr.sprouts.security.credential.cipher;
 
 import kr.sprouts.security.credential.codec.Codec;
 import kr.sprouts.security.credential.codec.CodecType;
