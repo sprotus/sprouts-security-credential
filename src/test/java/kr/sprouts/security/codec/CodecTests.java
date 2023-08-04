@@ -14,18 +14,17 @@ class CodecTests {
 
     @Test
     void encodeAndDecode() {
-        byte[] testBytes = "encode and decode test text.".getBytes(StandardCharsets.UTF_8);
+        String testText = "encode and decode test text.";
 
         for (CodecType codecType : CodecType.values()) {
             Codec codec = codecType.getCodecSupplier().get();
 
-            String encodedText = codec.encodeToString(testBytes);
-            log.info("EncodedText: " + encodedText);
-            byte[] decodedBytes = codec.decode(encodedText);
-            String decodedString = new String(decodedBytes);
-            log.info("DecodedString : " + decodedString);
+            String encodedText = codec.encodeToString(testText.getBytes(StandardCharsets.UTF_8));
+            String decodedString = new String(codec.decode(encodedText));
 
-            assertEquals("encode and decode test text.", decodedString);
+            assertEquals(testText, decodedString);
+
+            log.info(String.format("Codec '%s' test complete.", codecType.getName()));
         }
     }
 }
