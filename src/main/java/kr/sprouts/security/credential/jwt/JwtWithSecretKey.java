@@ -8,10 +8,10 @@ import io.jsonwebtoken.security.Keys;
 import javax.crypto.SecretKey;
 import javax.crypto.spec.SecretKeySpec;
 
-public class JwtWithSecretKey implements Jwt<SecretKey> {
+class JwtWithSecretKey implements Jwt<SecretKey> {
     private final SignatureAlgorithm signatureAlgorithm;
 
-    public JwtWithSecretKey(SignatureAlgorithm signatureAlgorithm) {
+    JwtWithSecretKey(SignatureAlgorithm signatureAlgorithm) {
         this.signatureAlgorithm = signatureAlgorithm;
     }
 

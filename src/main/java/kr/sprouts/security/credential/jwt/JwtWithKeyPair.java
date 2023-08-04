@@ -10,10 +10,10 @@ import java.security.KeyPair;
 import java.security.spec.PKCS8EncodedKeySpec;
 import java.security.spec.X509EncodedKeySpec;
 
-public class JwtWithKeyPair implements Jwt<KeyPair> {
+class JwtWithKeyPair implements Jwt<KeyPair> {
     private final SignatureAlgorithm signatureAlgorithm;
 
-    public JwtWithKeyPair(SignatureAlgorithm signatureAlgorithm) {
+    JwtWithKeyPair(SignatureAlgorithm signatureAlgorithm) {
         this.signatureAlgorithm = signatureAlgorithm;
     }
 
