@@ -1,10 +1,11 @@
 package kr.sprouts.security.credential;
 
-class JwtCredentialParam extends CredentialParam {
+class JwtCredentialParam implements CredentialParam<Principal> {
+    private final Principal principal;
     private final Long validityInMinute;
 
     private JwtCredentialParam(Principal principal, Long validityInMinute) {
-        super(principal);
+        this.principal = principal;
         this.validityInMinute = validityInMinute;
     }
 
@@ -12,7 +13,12 @@ class JwtCredentialParam extends CredentialParam {
         return new JwtCredentialParam(principal, validityInMinute);
     }
 
-    Long getValidityInMinute() {
+    @Override
+    public Principal getPrincipal() {
+        return principal;
+    }
+
+    public Long getValidityInMinute() {
         return validityInMinute;
     }
 }
