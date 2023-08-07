@@ -1,5 +1,5 @@
 package kr.sprouts.security.credential;
 
-public interface CredentialParam<T extends Principal> {
+public interface CredentialParameter<T extends Principal> {
     T getPrincipal();
 }

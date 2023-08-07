@@ -9,7 +9,7 @@ import java.sql.Timestamp;
 import java.time.LocalDateTime;
 import java.util.UUID;
 
-public class JwtCredentialProvider implements CredentialProvider<JwtCredentialParam, JwtCredential> {
+public class JwtCredentialProvider implements CredentialProvider<JwtCredentialParameter, JwtCredential> {
     private final Jwt<?> jwt;
 
     private JwtCredentialProvider(Jwt<?> jwt) {
@@ -24,16 +24,16 @@ public class JwtCredentialProvider implements CredentialProvider<JwtCredentialPa
         return new JwtCredentialProvider(jwtAlgorithm.getJwtSupplier().get());
     }
 
-    static JwtCredentialProvider fromCipherAlgorithmName(String jwtAlgorithmName) {
+    static JwtCredentialProvider fromJwtAlgorithmName(String jwtAlgorithmName) {
         return new JwtCredentialProvider(JwtAlgorithm.fromName(jwtAlgorithmName).getJwtSupplier().get());
     }
 
     @Override
-    public JwtCredential provide(JwtCredentialParam param, byte[] secret) {
+    public JwtCredential provide(JwtCredentialParameter param, byte[] secret) {
         return JwtCredential.of(jwt.createClaimsJws(convertToClaims(param), secret));
     }
 
-    private Claims convertToClaims(JwtCredentialParam param) {
+    private Claims convertToClaims(JwtCredentialParameter param) {
         LocalDateTime currentLocalDateTime = LocalDateTime.now();
 
         Claims claims = Jwts.claims();

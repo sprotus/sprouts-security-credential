@@ -5,7 +5,7 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import kr.sprouts.security.credential.cipher.Cipher;
 import kr.sprouts.security.credential.cipher.CipherAlgorithm;
 
-class CipherCredentialProvider implements CredentialProvider<CipherCredentialParam, CipherCredential> {
+class CipherCredentialProvider implements CredentialProvider<CipherCredentialParameter, CipherCredential> {
     private final ObjectMapper objectMapper = new ObjectMapper();
     private final Cipher<?> cipher;
 
@@ -26,7 +26,7 @@ class CipherCredentialProvider implements CredentialProvider<CipherCredentialPar
     }
 
     @Override
-    public CipherCredential provide(CipherCredentialParam param, byte[] secret) {
+    public CipherCredential provide(CipherCredentialParameter param, byte[] secret) {
         try {
             return CipherCredential.of(cipher.encrypt(objectMapper.writeValueAsString(param.getPrincipal()), secret));
         } catch (JsonProcessingException e) {

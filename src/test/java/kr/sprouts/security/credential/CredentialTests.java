@@ -41,7 +41,7 @@ class CredentialTests {
             if (secret instanceof SecretKey) {  // 대칭키
                 SecretKey secretKey = (SecretKey) secret;
 
-                CipherCredential cipherCredential = cipherCredentialProvider.provide(CipherCredentialParam.of(principal), secretKey.getEncoded());
+                CipherCredential cipherCredential = cipherCredentialProvider.provide(CipherCredentialParameter.of(principal), secretKey.getEncoded());
                 Principal consumedPrincipal = cipherCredentialConsumer.consume(cipherCredential, secretKey.getEncoded());
 
                 assertEquals(principal.getProviderId(), consumedPrincipal.getProviderId());
@@ -51,14 +51,14 @@ class CredentialTests {
                 PrivateKey privateKey = keyPair.getPrivate();
                 PublicKey publicKey = keyPair.getPublic();
 
-                CipherCredential cipherCredential = cipherCredentialProvider.provide(CipherCredentialParam.of(principal), privateKey.getEncoded());
+                CipherCredential cipherCredential = cipherCredentialProvider.provide(CipherCredentialParameter.of(principal), privateKey.getEncoded());
                 Principal consumedPrincipal = cipherCredentialConsumer.consume(cipherCredential, publicKey.getEncoded());
 
                 assertEquals(principal.getProviderId(), consumedPrincipal.getProviderId());
             } else if (secret instanceof byte[]) { // 비밀번호 암호화
                 byte[] password = (byte[]) secret;
 
-                CipherCredential cipherCredential = cipherCredentialProvider.provide(CipherCredentialParam.of(principal), password);
+                CipherCredential cipherCredential = cipherCredentialProvider.provide(CipherCredentialParameter.of(principal), password);
                 Principal consumedPrincipal = cipherCredentialConsumer.consume(cipherCredential, password);
 
                 assertEquals(principal.getProviderId(), consumedPrincipal.getProviderId());
@@ -84,7 +84,7 @@ class CredentialTests {
             if (secret instanceof SecretKey) { // 대칭키
                 SecretKey secretKey = (SecretKey) secret;
 
-                JwtCredential jwtCredential = jwtCredentialProvider.provide(JwtCredentialParam.of(principal, validityInMinute), secretKey.getEncoded());
+                JwtCredential jwtCredential = jwtCredentialProvider.provide(JwtCredentialParameter.of(principal, validityInMinute), secretKey.getEncoded());
                 Principal consumedPrincipal = jwtCredentialConsumer.consume(jwtCredential, secretKey.getEncoded());
 
                 assertEquals(principal.getProviderId(), consumedPrincipal.getProviderId());
@@ -94,7 +94,7 @@ class CredentialTests {
                 PrivateKey privateKey = keyPair.getPrivate();
                 PublicKey publicKey = keyPair.getPublic();
 
-                JwtCredential jwtCredential = jwtCredentialProvider.provide(JwtCredentialParam.of(principal, validityInMinute), privateKey.getEncoded());
+                JwtCredential jwtCredential = jwtCredentialProvider.provide(JwtCredentialParameter.of(principal, validityInMinute), privateKey.getEncoded());
                 Principal consumedPrincipal = jwtCredentialConsumer.consume(jwtCredential, publicKey.getEncoded());
 
                 assertEquals(principal.getProviderId(), consumedPrincipal.getProviderId());
