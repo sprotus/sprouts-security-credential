@@ -1,11 +1,18 @@
 package kr.sprouts.security.credential;
 
-class CipherCredentialParam extends CredentialParam {
-    private CipherCredentialParam(Principal principal) {
-        super(principal);
+class CipherCredentialParam implements CredentialParam<Principal> {
+    private final Principal principal;
+
+    public CipherCredentialParam(Principal principal) {
+        this.principal = principal;
     }
 
     static CipherCredentialParam of(Principal principal) {
         return new CipherCredentialParam(principal);
+    }
+
+    @Override
+    public Principal getPrincipal() {
+        return principal;
     }
 }
