@@ -1,17 +1,11 @@
 package kr.sprouts.security.credential;
 
-class JwtCredential implements Credential<String> {
-    private final String value;
+public class JwtCredential extends Credential<String> {
     private JwtCredential(String value) {
-        this.value = value;
+        super(value);
     }
 
-    static JwtCredential of(String value) {
+    public static JwtCredential of(String value) {
         return new JwtCredential(value);
-    }
-
-    @Override
-    public String getValue() {
-        return value;
     }
 }
