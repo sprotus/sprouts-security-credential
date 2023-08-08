@@ -1,5 +1,13 @@
 package kr.sprouts.security.credential;
 
-public interface CredentialParameter<T extends Principal> {
-    T getPrincipal();
+public class CredentialParameter<T extends Principal> {
+    private final T principal;
+
+    public CredentialParameter(T principal) {
+        this.principal = principal;
+    }
+
+    T getPrincipal() {
+        return principal;
+    }
 }
