@@ -2,11 +2,11 @@ package kr.sprouts.security.credential;
 
 class CipherCredential extends Credential<byte[]> {
 
-    private CipherCredential(byte[] value) {
-        super(value);
+    public CipherCredential(String key, byte[] value) {
+        super(key, value);
     }
 
-    public static CipherCredential of(byte[] value) {
-        return new CipherCredential(value);
+    public static CipherCredential of(String key, byte[] value) {
+        return new CipherCredential(key, value);
     }
 }

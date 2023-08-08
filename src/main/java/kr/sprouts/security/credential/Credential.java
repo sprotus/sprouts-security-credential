@@ -1,13 +1,19 @@
 package kr.sprouts.security.credential;
 
-public class Credential<T> {
-    private final T value;
+public class Credential<V> {
+    private final String key;
+    private final V value;
 
-    public Credential(T value) {
+    public Credential(String key, V value) {
+        this.key = key;
         this.value = value;
     }
 
-    public T getValue() {
+    public String getKey() {
+        return key;
+    }
+
+    public V getValue() {
         return value;
     }
 }

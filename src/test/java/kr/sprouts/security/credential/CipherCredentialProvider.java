@@ -28,7 +28,8 @@ class CipherCredentialProvider implements CredentialProvider<CipherCredentialPar
     @Override
     public CipherCredential provide(CipherCredentialParameter param, byte[] secret) {
         try {
-            return CipherCredential.of(cipher.encrypt(objectMapper.writeValueAsString(param.getPrincipal()), secret));
+            String key = "Authorization";
+            return CipherCredential.of(key, cipher.encrypt(objectMapper.writeValueAsString(param.getPrincipal()), secret));
         } catch (JsonProcessingException e) {
             throw new RuntimeException(e);
         }

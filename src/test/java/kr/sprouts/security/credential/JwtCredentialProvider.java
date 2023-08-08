@@ -30,7 +30,8 @@ public class JwtCredentialProvider implements CredentialProvider<JwtCredentialPa
 
     @Override
     public JwtCredential provide(JwtCredentialParameter param, byte[] secret) {
-        return JwtCredential.of(jwt.createClaimsJws(convertToClaims(param), secret));
+        String key = "Authorization";
+        return JwtCredential.of(key, jwt.createClaimsJws(convertToClaims(param), secret));
     }
 
     private Claims convertToClaims(JwtCredentialParameter param) {
