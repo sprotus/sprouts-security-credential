@@ -2,6 +2,8 @@ package kr.sprouts.security.credential.jwt;
 
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.Jwts;
+import kr.sprouts.security.credential.codec.Codec;
+import kr.sprouts.security.credential.codec.CodecType;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 
@@ -16,7 +18,7 @@ import java.util.logging.Logger;
 
 class JwtTests {
     Logger log = Logger.getLogger(this.getClass().getName());
-
+    Codec codec = CodecType.fromName("BASE64_URL").getCodecSupplier().get();
     @Test
     void createAndParse() {
         Claims claims = initializeClaims();
@@ -33,6 +35,8 @@ class JwtTests {
                 Claims parsedClaims = jwt.parseClaimsJws(claimsJws, secretKey.getEncoded());
 
                 Assertions.assertEquals(claims.getSubject(), parsedClaims.getSubject());
+
+                log.info(jwtAlgorithm.getName() + ": " + codec.encodeToString(secretKey.getEncoded()));
             } else if (secret instanceof KeyPair) {
                 KeyPair keyPair = (KeyPair) secret;
                 PrivateKey privateKey = keyPair.getPrivate();
