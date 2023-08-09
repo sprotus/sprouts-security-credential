@@ -71,11 +71,11 @@ public class CredentialProviderSpec {
         this.encodedSecret = encodedSecret;
     }
 
-    public List<TargetConsumer> getValidConsumers() {
+    public List<TargetConsumer> getTargetConsumers() {
         return targetConsumers;
     }
 
-    public void setValidConsumers(List<TargetConsumer> targetConsumers) {
+    public void setTargetConsumers(List<TargetConsumer> targetConsumers) {
         this.targetConsumers = targetConsumers;
     }
 

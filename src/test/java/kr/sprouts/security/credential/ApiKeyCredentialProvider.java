@@ -36,7 +36,7 @@ public class ApiKeyCredentialProvider implements CredentialProvider<ApiKeySubjec
                 property.getCodec(),
                 property.getAlgorithm(),
                 property.getEncodedSecret(),
-                property.getValidConsumers().stream().map(CredentialProviderSpec.TargetConsumer::getId).collect(Collectors.toList())
+                property.getTargetConsumers().stream().map(CredentialProviderSpec.TargetConsumer::getId).collect(Collectors.toList())
         );
     }
 
