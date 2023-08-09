@@ -8,7 +8,7 @@ import java.util.logging.Logger;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
-public class CipherTests {
+class CipherTests {
     Logger log = Logger.getLogger(this.getClass().getSimpleName());
 
     private CredentialProviderSpec initializeProviderSpec() {
