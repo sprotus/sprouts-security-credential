@@ -1,5 +1,7 @@
 package kr.sprouts.security.credential.cipher;
 
+import kr.sprouts.security.credential.codec.Codec;
+import kr.sprouts.security.credential.codec.CodecType;
 import org.junit.jupiter.api.Test;
 
 import javax.crypto.SecretKey;
@@ -10,6 +12,7 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 
 class CipherTests {
     Logger log = Logger.getLogger(this.getClass().getName());
+    Codec codec = CodecType.fromName("BASE64_URL").getCodecSupplier().get();
 
     @Test
     void encryptAndDecrypt() {
@@ -27,6 +30,9 @@ class CipherTests {
                 String decryptedText = cipher.decryptToString(encryptedText, secretKey.getEncoded());
 
                 assertEquals(plainText, decryptedText);
+
+                log.info(cipherAlgorithm.getName());
+                log.info(codec.encodeToString(secretKey.getEncoded()));
             } else if (secret instanceof byte[]) {
                 byte[] password = (byte[]) secret;
 

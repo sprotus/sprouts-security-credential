@@ -8,12 +8,16 @@ public class Principal<S extends Subject> {
     private List<UUID> targetConsumers;
     private S subject;
 
-    public Principal() { }
+    private Principal() { }
 
-    public Principal(UUID providerId, List<UUID> targetConsumers, S subject) {
+    private Principal(UUID providerId, List<UUID> targetConsumers, S subject) {
         this.providerId = providerId;
         this.targetConsumers = targetConsumers;
         this.subject = subject;
+    }
+
+    public static <S extends Subject> Principal<S> of(UUID providerId, List<UUID> targetConsumers, S subject) {
+        return new Principal<>(providerId, targetConsumers, subject);
     }
 
     public UUID getProviderId() {

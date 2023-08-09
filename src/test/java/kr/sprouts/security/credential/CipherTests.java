@@ -76,11 +76,11 @@ public class CipherTests {
         UUID memberId = UUID.randomUUID();
 
         ApiKeyCredentialProvider apiKeyCredentialProvider = ApiKeyCredentialProvider.of(initializeProviderSpec());
-        ApiKeyCredential apiKeyCredential = apiKeyCredentialProvider.provide(ApiKeySubject.of(memberId));
+        Credential credential = apiKeyCredentialProvider.provide(ApiKeySubject.of(memberId));
 
         ApiKeyCredentialConsumer apiKeyCredentialConsumer = ApiKeyCredentialConsumer.of(initializeConsumerSpec());
-        ApiKeyPrincipal apiKeyPrincipal = apiKeyCredentialConsumer.consume(apiKeyCredential);
+        Principal<ApiKeySubject> principal = apiKeyCredentialConsumer.consume(credential);
 
-        assertEquals(memberId, apiKeyPrincipal.getSubject().getMemberId());
+        assertEquals(memberId, principal.getSubject().getMemberId());
     }
 }

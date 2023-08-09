@@ -4,16 +4,18 @@ import java.util.List;
 import java.util.UUID;
 
 public class Credential {
-    private UUID providerId;
-    private List<UUID> consumerIds;
-    private String value;
+    private final UUID providerId;
+    private final List<UUID> consumerIds;
+    private final String value;
 
-    public Credential() { }
-
-    public Credential(UUID providerId, List<UUID> consumerIds, String value) {
+    private Credential(UUID providerId, List<UUID> consumerIds, String value) {
         this.providerId = providerId;
         this.consumerIds = consumerIds;
         this.value = value;
+    }
+
+    public static Credential of(UUID providerId, List<UUID> consumerIds, String value) {
+        return new Credential(providerId, consumerIds, value);
     }
 
     public UUID getProviderId() {
