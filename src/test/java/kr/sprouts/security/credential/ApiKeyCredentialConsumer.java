@@ -11,7 +11,7 @@ import java.util.List;
 import java.util.UUID;
 import java.util.stream.Collectors;
 
-public class ApiKeyCredentialConsumer implements CredentialConsumer<ApiKeyCredential, ApiKeyPrincipal, ApiKeySubject> {
+public class ApiKeyCredentialConsumer implements CredentialConsumer<ApiKeySubject> {
     private final ObjectMapper objectMapper = new ObjectMapper();
     private final UUID id;
     private final String name;
@@ -51,13 +51,13 @@ public class ApiKeyCredentialConsumer implements CredentialConsumer<ApiKeyCreden
     }
 
     @Override
-    public ApiKeyPrincipal consume(ApiKeyCredential credential) {
+    public Principal<ApiKeySubject> consume(Credential credential) {
         try {
-            ApiKeyPrincipal apiKeyPrincipal = objectMapper.readValue(cipher.decryptToString(codec.decode(credential.getValue()), decryptSecret), ApiKeyPrincipal.class);
+            Principal<ApiKeySubject> principal = objectMapper.readValue(cipher.decryptToString(codec.decode(credential.getValue()), decryptSecret), ApiKeyPrincipal.class);
 
-            if (!isValidProvider(apiKeyPrincipal.getProviderId())) throw new RuntimeException("Invalid provider.");
+            if (!isValidProvider(principal.getProviderId())) throw new RuntimeException("Invalid provider.");
 
-            return apiKeyPrincipal;
+            return principal;
         } catch (JsonProcessingException e) {
             throw new RuntimeException(e);
         }

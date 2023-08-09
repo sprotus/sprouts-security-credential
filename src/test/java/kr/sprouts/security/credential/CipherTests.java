@@ -79,8 +79,8 @@ public class CipherTests {
         ApiKeyCredential apiKeyCredential = apiKeyCredentialProvider.provide(ApiKeySubject.of(memberId));
 
         ApiKeyCredentialConsumer apiKeyCredentialConsumer = ApiKeyCredentialConsumer.of(initializeConsumerSpec());
-        ApiKeyPrincipal apiKeyPrincipal = apiKeyCredentialConsumer.consume(apiKeyCredential);
+        Principal<ApiKeySubject> principal = apiKeyCredentialConsumer.consume(apiKeyCredential);
 
-        assertEquals(memberId, apiKeyPrincipal.getSubject().getMemberId());
+        assertEquals(memberId, principal.getSubject().getMemberId());
     }
 }
