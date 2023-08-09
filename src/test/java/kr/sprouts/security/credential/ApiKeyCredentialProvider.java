@@ -11,7 +11,7 @@ import java.util.List;
 import java.util.UUID;
 import java.util.stream.Collectors;
 
-public class ApiKeyCredentialProvider implements CredentialProvider<ApiKeySubject, ApiKeyCredential> {
+public class ApiKeyCredentialProvider implements CredentialProvider<ApiKeySubject> {
     private final ObjectMapper objectMapper = new ObjectMapper();
     private final UUID id;
     private final String name;
@@ -51,12 +51,12 @@ public class ApiKeyCredentialProvider implements CredentialProvider<ApiKeySubjec
     }
 
     @Override
-    public ApiKeyCredential provide(ApiKeySubject subject) {
+    public Credential provide(ApiKeySubject subject) {
         try {
-            return ApiKeyCredential.of(
+            return Credential.of(
                     id,
                     targetConsumerIds,
-                    codec.encodeToString(cipher.encrypt(objectMapper.writeValueAsString(ApiKeyPrincipal.of(id, targetConsumerIds, subject)), encryptSecret))
+                    codec.encodeToString(cipher.encrypt(objectMapper.writeValueAsString(Principal.of(id, targetConsumerIds, subject)), encryptSecret))
             );
         } catch (JsonProcessingException e) {
             throw new RuntimeException(e);

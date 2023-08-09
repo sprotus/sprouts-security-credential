@@ -1,6 +1,7 @@
 package kr.sprouts.security.credential;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import kr.sprouts.security.credential.cipher.Cipher;
 import kr.sprouts.security.credential.cipher.CipherAlgorithm;
@@ -53,7 +54,7 @@ public class ApiKeyCredentialConsumer implements CredentialConsumer<ApiKeySubjec
     @Override
     public Principal<ApiKeySubject> consume(Credential credential) {
         try {
-            Principal<ApiKeySubject> principal = objectMapper.readValue(cipher.decryptToString(codec.decode(credential.getValue()), decryptSecret), ApiKeyPrincipal.class);
+            Principal<ApiKeySubject> principal = objectMapper.readValue(cipher.decryptToString(codec.decode(credential.getValue()), decryptSecret), new TypeReference<>() {});
 
             if (!isValidProvider(principal.getProviderId())) throw new RuntimeException("Invalid provider.");
 
