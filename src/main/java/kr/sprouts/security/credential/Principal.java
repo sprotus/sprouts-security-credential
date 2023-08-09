@@ -1,31 +1,30 @@
 package kr.sprouts.security.credential;
 
-public class Principal {
-    private String providerId;
-    private String consumerId;
-    private String memberId;
+import java.util.List;
+import java.util.UUID;
 
-    private Principal() { }
+public class Principal<S extends Subject> {
+    private UUID providerId;
+    private List<UUID> targetConsumers;
+    private S subject;
 
-    public Principal(String providerId, String consumerId, String memberId) {
+    public Principal() { }
+
+    public Principal(UUID providerId, List<UUID> targetConsumers, S subject) {
         this.providerId = providerId;
-        this.consumerId = consumerId;
-        this.memberId = memberId;
+        this.targetConsumers = targetConsumers;
+        this.subject = subject;
     }
 
-    public static Principal of(String providerId, String consumerId, String memberId) {
-        return new Principal(providerId, consumerId, memberId);
-    }
-
-    public String getProviderId() {
+    public UUID getProviderId() {
         return providerId;
     }
 
-    public String getConsumerId() {
-        return consumerId;
+    public List<UUID> getTargetConsumers() {
+        return targetConsumers;
     }
 
-    public String getMemberId() {
-        return memberId;
+    public S getSubject() {
+        return subject;
     }
 }

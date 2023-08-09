@@ -1,5 +1,9 @@
 package kr.sprouts.security.credential;
 
-public interface CredentialConsumer<T extends Credential<?>> {
-    Principal consume(T credential, byte[] secret);
+import java.util.UUID;
+
+public interface CredentialConsumer<C extends Credential, P extends Principal<S>, S extends Subject> {
+    UUID getId();
+    String getName();
+    P consume(C credential);
 }

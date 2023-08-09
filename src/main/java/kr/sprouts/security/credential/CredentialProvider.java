@@ -1,5 +1,9 @@
 package kr.sprouts.security.credential;
 
-public interface CredentialProvider<S extends CredentialParam<? extends Principal>, T extends Credential<?>> {
-    T provide(S credentialParam, byte[] secret);
+import java.util.UUID;
+
+public interface CredentialProvider<S extends Subject, C extends Credential> {
+    UUID getId();
+    String getName();
+    C provide(S subject);
 }
