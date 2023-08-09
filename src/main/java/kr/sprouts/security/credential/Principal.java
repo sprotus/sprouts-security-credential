@@ -4,9 +4,11 @@ import java.util.List;
 import java.util.UUID;
 
 public class Principal<S extends Subject> {
-    private final UUID providerId;
-    private final List<UUID> targetConsumers;
-    private final S subject;
+    private UUID providerId;
+    private List<UUID> targetConsumers;
+    private S subject;
+
+    private Principal() { }
 
     private Principal(UUID providerId, List<UUID> targetConsumers, S subject) {
         this.providerId = providerId;
