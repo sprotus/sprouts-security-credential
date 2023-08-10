@@ -11,7 +11,7 @@ import java.util.List;
 import java.util.UUID;
 import java.util.stream.Collectors;
 
-public class ApiKeyCredentialProvider implements CredentialProvider<ApiKeySubject> {
+public class CipherCredentialProvider implements CredentialProvider<CipherSubject> {
     private final ObjectMapper objectMapper = new ObjectMapper();
     private final UUID id;
     private final String name;
@@ -20,7 +20,7 @@ public class ApiKeyCredentialProvider implements CredentialProvider<ApiKeySubjec
     private final byte[] encryptSecret;
     private final List<UUID> targetConsumerIds;
 
-    private ApiKeyCredentialProvider(String providerId, String providerName, String codec, String algorithm, String encodedEncryptSecret, List<String> targetConsumerIds) {
+    private CipherCredentialProvider(String providerId, String providerName, String codec, String algorithm, String encodedEncryptSecret, List<String> targetConsumerIds) {
         this.id = UUID.fromString(providerId);
         this.name = providerName;
         this.codec = CodecType.fromName(codec).getCodecSupplier().get();
@@ -29,8 +29,8 @@ public class ApiKeyCredentialProvider implements CredentialProvider<ApiKeySubjec
         this.targetConsumerIds = targetConsumerIds.stream().map(UUID::fromString).collect(Collectors.toList());
     }
 
-    public static ApiKeyCredentialProvider of(CredentialProviderSpec property) {
-        return new ApiKeyCredentialProvider(
+    public static CipherCredentialProvider of(CredentialProviderSpec property) {
+        return new CipherCredentialProvider(
                 property.getId(),
                 property.getName(),
                 property.getCodec(),
@@ -51,7 +51,7 @@ public class ApiKeyCredentialProvider implements CredentialProvider<ApiKeySubjec
     }
 
     @Override
-    public Credential provide(ApiKeySubject subject) {
+    public Credential provide(CipherSubject subject) {
         try {
             return Credential.of(
                     id,

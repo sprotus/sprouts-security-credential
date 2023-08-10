@@ -12,7 +12,7 @@ import java.util.List;
 import java.util.UUID;
 import java.util.stream.Collectors;
 
-public class ApiKeyCredentialConsumer implements CredentialConsumer<ApiKeySubject> {
+public class CipherCredentialConsumer implements CredentialConsumer<CipherSubject> {
     private final ObjectMapper objectMapper = new ObjectMapper();
     private final UUID id;
     private final String name;
@@ -21,7 +21,7 @@ public class ApiKeyCredentialConsumer implements CredentialConsumer<ApiKeySubjec
     private final byte[] decryptSecret;
     private final List<UUID> validProviderIds;
 
-    private ApiKeyCredentialConsumer(String consumerId, String consumerName, String codec, String algorithmName, String encodedDecryptSecret, List<String> validProviderIds) {
+    private CipherCredentialConsumer(String consumerId, String consumerName, String codec, String algorithmName, String encodedDecryptSecret, List<String> validProviderIds) {
         this.id = UUID.fromString(consumerId);
         this.name = consumerName;
         this.codec = CodecType.fromName(codec).getCodecSupplier().get();
@@ -30,14 +30,14 @@ public class ApiKeyCredentialConsumer implements CredentialConsumer<ApiKeySubjec
         this.validProviderIds = validProviderIds.stream().map(UUID::fromString).collect(Collectors.toList());
     }
 
-    public static ApiKeyCredentialConsumer of(CredentialConsumerSpec property) {
-        return new ApiKeyCredentialConsumer(
-                property.getId(),
-                property.getName(),
-                property.getCodec(),
-                property.getAlgorithm(),
-                property.getEncodedSecret(),
-                property.getValidProviders().stream().map(CredentialConsumerSpec.ValidProvider::getId).collect(Collectors.toList())
+    public static CipherCredentialConsumer of(CredentialConsumerSpec spec) {
+        return new CipherCredentialConsumer(
+                spec.getId(),
+                spec.getName(),
+                spec.getCodec(),
+                spec.getAlgorithm(),
+                spec.getEncodedSecret(),
+                spec.getValidProviders().stream().map(CredentialConsumerSpec.ValidProvider::getId).collect(Collectors.toList())
         );
     }
 
@@ -52,9 +52,9 @@ public class ApiKeyCredentialConsumer implements CredentialConsumer<ApiKeySubjec
     }
 
     @Override
-    public Principal<ApiKeySubject> consume(Credential credential) {
+    public Principal<CipherSubject> consume(Credential credential) {
         try {
-            Principal<ApiKeySubject> principal = objectMapper.readValue(cipher.decryptToString(codec.decode(credential.getValue()), decryptSecret), new TypeReference<>() {});
+            Principal<CipherSubject> principal = objectMapper.readValue(cipher.decryptToString(codec.decode(credential.getValue()), decryptSecret), new TypeReference<>() {});
 
             if (!isValidProvider(principal.getProviderId())) throw new RuntimeException("Invalid provider.");
 

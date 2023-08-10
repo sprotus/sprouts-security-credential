@@ -30,4 +30,6 @@ public enum CodecType {
     public Supplier<Codec> getCodecSupplier() {
         return codecSupplier;
     }
+
+    private static class UnsupportedCodecException extends RuntimeException { }
 }
