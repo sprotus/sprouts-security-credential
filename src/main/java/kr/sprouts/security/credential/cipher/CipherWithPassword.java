@@ -40,10 +40,14 @@ class CipherWithPassword implements Cipher<byte[]> {
 
     @Override
     public byte[] generateSecret() {
-        byte[] password = new byte[keySize];
-        new SecureRandom().nextBytes(password);
+        try {
+            byte[] password = new byte[keySize];
+            new SecureRandom().nextBytes(password);
 
-        return password;
+            return password;
+        } catch (RuntimeException e) {
+            throw new CipherGenerateSecretException(e);
+        }
     }
 
     private char[] toCharArray(byte[] bytes) {

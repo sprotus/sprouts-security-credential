@@ -37,4 +37,6 @@ public enum CipherAlgorithm {
     public Supplier<Cipher<?>> getCipherSupplier() {
         return cipherSupplier;
     }
+
+    private static class UnsupportedCipherAlgorithm extends RuntimeException { }
 }
