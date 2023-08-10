@@ -1,19 +1,16 @@
 package kr.sprouts.security.credential.cipher;
 
-import kr.sprouts.security.credential.codec.Codec;
-import kr.sprouts.security.credential.codec.CodecType;
 import org.junit.jupiter.api.Test;
 
 import javax.crypto.SecretKey;
 import java.security.KeyPair;
+import java.util.logging.Level;
 import java.util.logging.Logger;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
 class CipherTests {
     Logger log = Logger.getLogger(this.getClass().getName());
-    Codec codec = CodecType.fromName("BASE64_URL").getCodecSupplier().get();
-
     @Test
     void encryptAndDecrypt() {
         String plainText = "Plain text.";
@@ -30,9 +27,6 @@ class CipherTests {
                 String decryptedText = cipher.decryptToString(encryptedText, secretKey.getEncoded());
 
                 assertEquals(plainText, decryptedText);
-
-                log.info(cipherAlgorithm.getName());
-                log.info(codec.encodeToString(secretKey.getEncoded()));
             } else if (secret instanceof byte[]) {
                 byte[] password = (byte[]) secret;
 
@@ -52,7 +46,9 @@ class CipherTests {
                 assertEquals(plainText, decryptedText);
             }
 
-            log.info(String.format("Cipher algorithm '%s' test complete.", cipherAlgorithm.getName()));
+            if (log.isLoggable(Level.INFO)) {
+                log.info(String.format("Cipher algorithm '%s' test complete.", cipherAlgorithm.getName()));
+            }
         }
     }
 }

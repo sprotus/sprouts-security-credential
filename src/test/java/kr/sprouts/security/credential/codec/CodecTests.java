@@ -3,6 +3,7 @@ package kr.sprouts.security.credential.codec;
 import org.junit.jupiter.api.Test;
 
 import java.nio.charset.StandardCharsets;
+import java.util.logging.Level;
 import java.util.logging.Logger;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
@@ -22,7 +23,9 @@ class CodecTests {
 
             assertEquals(testText, decodedString);
 
-            log.info(String.format("Codec '%s' test complete.", codecType.getName()));
+            if (log.isLoggable(Level.INFO)) {
+                log.info(String.format("Codec '%s' test complete.", codecType.getName()));
+            }
         }
     }
 }

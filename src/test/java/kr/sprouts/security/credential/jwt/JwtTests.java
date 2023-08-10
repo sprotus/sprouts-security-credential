@@ -2,8 +2,6 @@ package kr.sprouts.security.credential.jwt;
 
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.Jwts;
-import kr.sprouts.security.credential.codec.Codec;
-import kr.sprouts.security.credential.codec.CodecType;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 
@@ -14,11 +12,12 @@ import java.security.PublicKey;
 import java.sql.Timestamp;
 import java.time.LocalDateTime;
 import java.util.UUID;
+import java.util.logging.Level;
 import java.util.logging.Logger;
 
 class JwtTests {
     Logger log = Logger.getLogger(this.getClass().getName());
-    Codec codec = CodecType.fromName("BASE64_URL").getCodecSupplier().get();
+
     @Test
     void createAndParse() {
         Claims claims = initializeClaims();
@@ -35,8 +34,6 @@ class JwtTests {
                 Claims parsedClaims = jwt.parseClaimsJws(claimsJws, secretKey.getEncoded());
 
                 Assertions.assertEquals(claims.getSubject(), parsedClaims.getSubject());
-
-                log.info(jwtAlgorithm.getName() + ": " + codec.encodeToString(secretKey.getEncoded()));
             } else if (secret instanceof KeyPair) {
                 KeyPair keyPair = (KeyPair) secret;
                 PrivateKey privateKey = keyPair.getPrivate();
@@ -48,7 +45,9 @@ class JwtTests {
                 Assertions.assertEquals(claims.getSubject(), parsedClaims.getSubject());
             }
 
-            log.info(String.format("Jwt algorithm '%s' test complete.", jwtAlgorithm.getName()));
+            if (log.isLoggable(Level.INFO)) {
+                log.info(String.format("Jwt algorithm '%s' test complete.", jwtAlgorithm.getName()));
+            }
         }
     }
 
