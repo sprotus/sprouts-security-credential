@@ -5,6 +5,9 @@ import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.SignatureAlgorithm;
 import io.jsonwebtoken.security.Keys;
 
+import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.NotEmpty;
+import javax.validation.constraints.NotNull;
 import java.security.KeyFactory;
 import java.security.KeyPair;
 import java.security.NoSuchAlgorithmException;
@@ -13,9 +16,10 @@ import java.security.spec.PKCS8EncodedKeySpec;
 import java.security.spec.X509EncodedKeySpec;
 
 class JwtWithKeyPair implements Jwt<KeyPair> {
+    @NotNull
     private final SignatureAlgorithm signatureAlgorithm;
 
-    JwtWithKeyPair(SignatureAlgorithm signatureAlgorithm) {
+    JwtWithKeyPair(@NotNull SignatureAlgorithm signatureAlgorithm) {
         this.signatureAlgorithm = signatureAlgorithm;
     }
 
@@ -24,24 +28,24 @@ class JwtWithKeyPair implements Jwt<KeyPair> {
         try {
             return Keys.keyPairFor(signatureAlgorithm);
         } catch (RuntimeException e) {
-            throw new JwtGenerateSecretException(e);
+            throw new GenerateSecretException(e);
         }
     }
 
     @Override
-    public String createClaimsJws(Claims claims, byte[] privateKeyBytes) {
+    public String createClaimsJws(@NotNull Claims claims, @NotEmpty byte[] privateKeyBytes) {
         try {
             return Jwts.builder()
                     .setClaims(claims)
                     .signWith(KeyFactory.getInstance(signatureAlgorithm.getFamilyName()).generatePrivate(new PKCS8EncodedKeySpec(privateKeyBytes)), signatureAlgorithm)
                     .compact();
         } catch (NoSuchAlgorithmException | InvalidKeySpecException e) {
-            throw new JwtCreateException(e);
+            throw new ClaimsJwsCreateException(e);
         }
     }
 
     @Override
-    public Claims parseClaimsJws(String claimsJws, byte[] publicKeyBytes) {
+    public Claims parseClaimsJws(@NotBlank String claimsJws, @NotEmpty byte[] publicKeyBytes) {
         try {
             return Jwts.parserBuilder()
                     .setSigningKey(KeyFactory.getInstance(signatureAlgorithm.getFamilyName()).generatePublic(new X509EncodedKeySpec(publicKeyBytes)))
@@ -49,7 +53,7 @@ class JwtWithKeyPair implements Jwt<KeyPair> {
                     .parseClaimsJws(claimsJws)
                     .getBody();
         } catch (NoSuchAlgorithmException | InvalidKeySpecException e) {
-            throw new JwtParseException(e);
+            throw new ClaimsJwsParseException(e);
         }
     }
 }

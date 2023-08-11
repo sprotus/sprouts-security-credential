@@ -63,7 +63,7 @@ public class JwtCredentialProvider implements CredentialProvider<JwtSubject> {
                     jwt.createClaimsJws(claims(Principal.of(id, targetConsumerIds, subject)), encryptSecret)
             );
         } catch (Throwable e) {
-            throw new BearerTokenCredentialProvideException(e);
+            throw new RuntimeException(e);
         }
     }
 
@@ -79,11 +79,5 @@ public class JwtCredentialProvider implements CredentialProvider<JwtSubject> {
         claims.setExpiration(Timestamp.valueOf(currentDateTime.plusMinutes(principal.getSubject().getValidityInMinutes())));
 
         return claims;
-    }
-
-    static class BearerTokenCredentialProvideException extends RuntimeException {
-        BearerTokenCredentialProvideException(Throwable cause) {
-            super(cause);
-        }
     }
 }

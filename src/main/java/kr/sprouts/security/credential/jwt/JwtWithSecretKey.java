@@ -7,11 +7,15 @@ import io.jsonwebtoken.security.Keys;
 
 import javax.crypto.SecretKey;
 import javax.crypto.spec.SecretKeySpec;
+import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.NotEmpty;
+import javax.validation.constraints.NotNull;
 
 class JwtWithSecretKey implements Jwt<SecretKey> {
+    @NotNull
     private final SignatureAlgorithm signatureAlgorithm;
 
-    JwtWithSecretKey(SignatureAlgorithm signatureAlgorithm) {
+    JwtWithSecretKey(@NotNull SignatureAlgorithm signatureAlgorithm) {
         this.signatureAlgorithm = signatureAlgorithm;
     }
 
@@ -20,24 +24,24 @@ class JwtWithSecretKey implements Jwt<SecretKey> {
         try {
             return Keys.secretKeyFor(signatureAlgorithm);
         } catch (RuntimeException e) {
-            throw new JwtGenerateSecretException(e);
+            throw new GenerateSecretException(e);
         }
     }
 
     @Override
-    public String createClaimsJws(Claims claims, byte[] secret) {
+    public String createClaimsJws(@NotNull Claims claims, @NotEmpty byte[] secret) {
         try {
             return Jwts.builder()
                     .setClaims(claims)
                     .signWith(new SecretKeySpec(secret, signatureAlgorithm.getJcaName()), signatureAlgorithm)
                     .compact();
         } catch (RuntimeException e) {
-            throw new JwtCreateException(e);
+            throw new ClaimsJwsCreateException(e);
         }
     }
 
     @Override
-    public Claims parseClaimsJws(String claimsJws, byte[] secret) {
+    public Claims parseClaimsJws(@NotBlank String claimsJws, @NotEmpty byte[] secret) {
         try {
             return Jwts.parserBuilder()
                     .setSigningKey(new SecretKeySpec(secret, signatureAlgorithm.getJcaName()))
@@ -45,7 +49,7 @@ class JwtWithSecretKey implements Jwt<SecretKey> {
                     .parseClaimsJws(claimsJws)
                     .getBody();
         } catch (RuntimeException e) {
-            throw new JwtParseException(e);
+            throw new ClaimsJwsParseException(e);
         }
     }
 }
