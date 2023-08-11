@@ -3,6 +3,10 @@ package kr.sprouts.security.credential.cipher;
 import javax.crypto.BadPaddingException;
 import javax.crypto.IllegalBlockSizeException;
 import javax.crypto.NoSuchPaddingException;
+import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.NotEmpty;
+import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Size;
 import java.nio.charset.StandardCharsets;
 import java.security.InvalidKeyException;
 import java.security.KeyFactory;
@@ -16,11 +20,14 @@ import java.security.spec.PKCS8EncodedKeySpec;
 import java.security.spec.X509EncodedKeySpec;
 
 class CipherWithKeyPair implements Cipher<KeyPair> {
+    @NotBlank
     private final String encryptAlgorithm;
+    @NotBlank
     private final String keyAlgorithm;
+    @NotNull @Size
     private final Integer keySize;
 
-    CipherWithKeyPair(String encryptAlgorithm, String keyAlgorithm, Integer keySize) {
+    CipherWithKeyPair(@NotBlank String encryptAlgorithm, @NotBlank String keyAlgorithm, @NotNull @Size Integer keySize) {
         this.encryptAlgorithm = encryptAlgorithm;
         this.keyAlgorithm = keyAlgorithm;
         this.keySize = keySize;
@@ -39,7 +46,7 @@ class CipherWithKeyPair implements Cipher<KeyPair> {
     }
 
     @Override
-    public byte[] encrypt(String plainText, byte[] privateKeyBytes) {
+    public byte[] encrypt(@NotBlank String plainText, @NotEmpty byte[] privateKeyBytes) {
         try {
             KeyFactory keyFactory = KeyFactory.getInstance(keyAlgorithm);
             PrivateKey privateKey = keyFactory.generatePrivate(new PKCS8EncodedKeySpec(privateKeyBytes));
@@ -55,7 +62,7 @@ class CipherWithKeyPair implements Cipher<KeyPair> {
     }
 
     @Override
-    public byte[] decrypt(byte[] encryptedBytes, byte[] publicKeyBytes) {
+    public byte[] decrypt(@NotEmpty byte[] encryptedBytes, @NotEmpty byte[] publicKeyBytes) {
         try {
             KeyFactory keyFactory = KeyFactory.getInstance(keyAlgorithm);
             PublicKey publicKey = keyFactory.generatePublic(new X509EncodedKeySpec(publicKeyBytes));
@@ -70,7 +77,7 @@ class CipherWithKeyPair implements Cipher<KeyPair> {
     }
 
     @Override
-    public String decryptToString(byte[] encryptedBytes, byte[] publicKeyBytes) {
+    public String decryptToString(@NotEmpty byte[] encryptedBytes, @NotEmpty byte[] publicKeyBytes) {
         return new String(decrypt(encryptedBytes, publicKeyBytes));
     }
 }

@@ -1,16 +1,34 @@
 package kr.sprouts.security.credential;
 
+import kr.sprouts.security.credential.annotation.UUID;
+
+import javax.validation.constraints.NotBlank;
+
 class CredentialSpec {
+    @NotBlank
+    @UUID
     private String id;
+    @NotBlank
     private String name;
+    @NotBlank
     private String type;
+    @NotBlank
     private String algorithm;
+    @NotBlank
     private String codec;
+    @NotBlank
     private String encodedSecret;
 
     CredentialSpec() { }
 
-    CredentialSpec(String id, String name, String type, String algorithm, String codec, String encodedSecret) {
+    CredentialSpec(
+            @NotBlank @UUID String id,
+            @NotBlank String name,
+            @NotBlank String type,
+            @NotBlank String algorithm,
+            @NotBlank String codec,
+            @NotBlank String encodedSecret
+    ) {
         this.id = id;
         this.name = name;
         this.type = type;
@@ -23,7 +41,7 @@ class CredentialSpec {
         return id;
     }
 
-    public void setId(String id) {
+    public void setId(@NotBlank @UUID String id) {
         this.id = id;
     }
 
@@ -31,7 +49,7 @@ class CredentialSpec {
         return name;
     }
 
-    public void setName(String name) {
+    public void setName(@NotBlank String name) {
         this.name = name;
     }
 
@@ -39,7 +57,7 @@ class CredentialSpec {
         return type;
     }
 
-    public void setType(String type) {
+    public void setType(@NotBlank String type) {
         this.type = type;
     }
 
@@ -47,7 +65,7 @@ class CredentialSpec {
         return algorithm;
     }
 
-    public void setAlgorithm(String algorithm) {
+    public void setAlgorithm(@NotBlank String algorithm) {
         this.algorithm = algorithm;
     }
 
@@ -55,7 +73,7 @@ class CredentialSpec {
         return codec;
     }
 
-    public void setCodec(String codec) {
+    public void setCodec(@NotBlank String codec) {
         this.codec = codec;
     }
 
@@ -63,7 +81,7 @@ class CredentialSpec {
         return encodedSecret;
     }
 
-    public void setEncodedSecret(String encodedSecret) {
+    public void setEncodedSecret(@NotBlank String encodedSecret) {
         this.encodedSecret = encodedSecret;
     }
 }
