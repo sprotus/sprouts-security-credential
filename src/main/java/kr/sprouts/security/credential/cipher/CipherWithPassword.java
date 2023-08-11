@@ -46,7 +46,7 @@ class CipherWithPassword implements Cipher<byte[]> {
 
             return password;
         } catch (RuntimeException e) {
-            throw new CipherGenerateSecretException(e);
+            throw new GenerateSecretException(e);
         }
     }
 
@@ -99,14 +99,14 @@ class CipherWithPassword implements Cipher<byte[]> {
         } catch (InvalidAlgorithmParameterException | NoSuchPaddingException | IllegalBlockSizeException |
                  NoSuchAlgorithmException | InvalidKeySpecException | BadPaddingException | IOException |
                  InvalidKeyException e) {
-            throw new CipherEncryptException(e);
+            throw new EncryptException(e);
         }
     }
 
     @Override
     public byte[] decrypt(byte[] encryptedBytes, byte[] secret) {
         try {
-            if (encryptedBytes.length < saltSize + ivSize) throw new CipherDecryptException();
+            if (encryptedBytes.length < saltSize + ivSize) throw new DecryptException();
 
             byte[] salt = Arrays.copyOfRange(encryptedBytes, 0, saltSize);
             byte[] iv = Arrays.copyOfRange(encryptedBytes, saltSize, (saltSize + ivSize));
@@ -124,7 +124,7 @@ class CipherWithPassword implements Cipher<byte[]> {
             return cipher.doFinal(encryptedText);
         } catch (InvalidAlgorithmParameterException | NoSuchPaddingException | IllegalBlockSizeException |
                  NoSuchAlgorithmException | InvalidKeySpecException | BadPaddingException | InvalidKeyException e) {
-            throw new CipherDecryptException(e);
+            throw new DecryptException(e);
         }
     }
 

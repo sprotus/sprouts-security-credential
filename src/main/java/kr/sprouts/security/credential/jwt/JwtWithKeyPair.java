@@ -24,7 +24,7 @@ class JwtWithKeyPair implements Jwt<KeyPair> {
         try {
             return Keys.keyPairFor(signatureAlgorithm);
         } catch (RuntimeException e) {
-            throw new JwtGenerateSecretException(e);
+            throw new GenerateSecretException(e);
         }
     }
 
@@ -36,7 +36,7 @@ class JwtWithKeyPair implements Jwt<KeyPair> {
                     .signWith(KeyFactory.getInstance(signatureAlgorithm.getFamilyName()).generatePrivate(new PKCS8EncodedKeySpec(privateKeyBytes)), signatureAlgorithm)
                     .compact();
         } catch (NoSuchAlgorithmException | InvalidKeySpecException e) {
-            throw new JwtCreateException(e);
+            throw new ClaimsJwsCreateException(e);
         }
     }
 
@@ -49,7 +49,7 @@ class JwtWithKeyPair implements Jwt<KeyPair> {
                     .parseClaimsJws(claimsJws)
                     .getBody();
         } catch (NoSuchAlgorithmException | InvalidKeySpecException e) {
-            throw new JwtParseException(e);
+            throw new ClaimsJwsParseException(e);
         }
     }
 }

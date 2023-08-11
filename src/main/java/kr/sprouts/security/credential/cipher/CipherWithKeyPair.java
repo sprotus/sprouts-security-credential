@@ -34,7 +34,7 @@ class CipherWithKeyPair implements Cipher<KeyPair> {
 
             return keyPairGen.generateKeyPair();
         } catch (NoSuchAlgorithmException e) {
-            throw new CipherGenerateSecretException(e);
+            throw new GenerateSecretException(e);
         }
     }
 
@@ -50,7 +50,7 @@ class CipherWithKeyPair implements Cipher<KeyPair> {
             return cipher.doFinal(plainText.getBytes(StandardCharsets.UTF_8));
         } catch (NoSuchAlgorithmException | InvalidKeySpecException | NoSuchPaddingException |
                  IllegalBlockSizeException | BadPaddingException | InvalidKeyException e) {
-            throw new CipherEncryptException(e);
+            throw new EncryptException(e);
         }
     }
 
@@ -65,7 +65,7 @@ class CipherWithKeyPair implements Cipher<KeyPair> {
             return cipher.doFinal(encryptedBytes);
         } catch (NoSuchPaddingException | IllegalBlockSizeException | NoSuchAlgorithmException |
                  InvalidKeySpecException | BadPaddingException | InvalidKeyException e) {
-            throw new CipherDecryptException(e);
+            throw new DecryptException(e);
         }
     }
 

@@ -37,7 +37,7 @@ class CipherWithSecretKey implements Cipher<SecretKey> {
 
             return keyGenerator.generateKey();
         } catch (NoSuchAlgorithmException e) {
-            throw new CipherGenerateSecretException(e);
+            throw new GenerateSecretException(e);
         }
     }
 
@@ -48,7 +48,7 @@ class CipherWithSecretKey implements Cipher<SecretKey> {
 
             int secretKeySize = (secretKey.getEncoded().length * 8);
 
-            if(secretKeySize != keySize) throw new CipherEncryptException(String.format("The expected secret key size is %s bits, but %s bits were provided.", keySize, secretKeySize));
+            if(secretKeySize != keySize) throw new EncryptException(String.format("The expected secret key size is %s bits, but %s bits were provided.", keySize, secretKeySize));
 
             byte[] iv = new byte[ivSize];
             new SecureRandom().nextBytes(iv);
@@ -65,7 +65,7 @@ class CipherWithSecretKey implements Cipher<SecretKey> {
             return outputStream.toByteArray();
         } catch (InvalidAlgorithmParameterException | NoSuchPaddingException | IllegalBlockSizeException |
                  NoSuchAlgorithmException | BadPaddingException | IOException | InvalidKeyException e) {
-            throw new CipherEncryptException(e);
+            throw new EncryptException(e);
         }
     }
 
@@ -74,7 +74,7 @@ class CipherWithSecretKey implements Cipher<SecretKey> {
         try {
             SecretKey secretKey = new SecretKeySpec(secret, keyAlgorithm);
 
-            if (encryptedBytes.length < ivSize) throw new CipherDecryptException();
+            if (encryptedBytes.length < ivSize) throw new DecryptException();
 
             byte[] iv = Arrays.copyOfRange(encryptedBytes, 0, ivSize);
             byte[] encryptedText = Arrays.copyOfRange(encryptedBytes, ivSize, encryptedBytes.length);
@@ -85,7 +85,7 @@ class CipherWithSecretKey implements Cipher<SecretKey> {
             return cipher.doFinal(encryptedText);
         } catch (InvalidAlgorithmParameterException | NoSuchPaddingException | IllegalBlockSizeException |
                  NoSuchAlgorithmException | BadPaddingException | InvalidKeyException e) {
-            throw new CipherDecryptException(e);
+            throw new DecryptException(e);
         }
     }
 
