@@ -1,7 +1,5 @@
 package kr.sprouts.security.credential.cipher;
 
-import javax.validation.constraints.NotBlank;
-import javax.validation.constraints.NotNull;
 import java.util.function.Supplier;
 
 public enum CipherAlgorithm {
@@ -19,12 +17,12 @@ public enum CipherAlgorithm {
     private final String name;
     private final Supplier<Cipher<?>> cipherSupplier;
 
-    CipherAlgorithm(@NotBlank String name, @NotNull Supplier<Cipher<?>> cipherSupplier) {
+    CipherAlgorithm(String name, Supplier<Cipher<?>> cipherSupplier) {
         this.name = name;
         this.cipherSupplier = cipherSupplier;
     }
 
-    public static CipherAlgorithm fromName(@NotBlank String name) {
+    public static CipherAlgorithm fromName(String name) {
         for (CipherAlgorithm cipherAlgorithm : values()) {
             if (cipherAlgorithm.getName().equalsIgnoreCase(name)) return cipherAlgorithm;
         }

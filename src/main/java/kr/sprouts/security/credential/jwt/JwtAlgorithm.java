@@ -2,8 +2,6 @@ package kr.sprouts.security.credential.jwt;
 
 import io.jsonwebtoken.SignatureAlgorithm;
 
-import javax.validation.constraints.NotBlank;
-import javax.validation.constraints.NotNull;
 import java.util.function.Supplier;
 
 public enum JwtAlgorithm {
@@ -21,17 +19,15 @@ public enum JwtAlgorithm {
     PS512("PS512", () -> new JwtWithKeyPair(SignatureAlgorithm.PS512)),
     ;
 
-    JwtAlgorithm(@NotBlank String name, @NotNull Supplier<Jwt<?>> jwtSupplier) {
+    JwtAlgorithm(String name, Supplier<Jwt<?>> jwtSupplier) {
         this.name = name;
         this.jwtSupplier = jwtSupplier;
     }
 
-    @NotBlank
     private final String name;
-    @NotNull
     private final Supplier<Jwt<?>> jwtSupplier;
 
-    public static JwtAlgorithm fromName(@NotBlank String name) {
+    public static JwtAlgorithm fromName(String name) {
         for (JwtAlgorithm jwtAlgorithm : values()) {
             if (jwtAlgorithm.getName().equalsIgnoreCase(name)) return jwtAlgorithm;
         }

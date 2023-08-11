@@ -7,15 +7,11 @@ import io.jsonwebtoken.security.Keys;
 
 import javax.crypto.SecretKey;
 import javax.crypto.spec.SecretKeySpec;
-import javax.validation.constraints.NotBlank;
-import javax.validation.constraints.NotEmpty;
-import javax.validation.constraints.NotNull;
 
 class JwtWithSecretKey implements Jwt<SecretKey> {
-    @NotNull
     private final SignatureAlgorithm signatureAlgorithm;
 
-    JwtWithSecretKey(@NotNull SignatureAlgorithm signatureAlgorithm) {
+    JwtWithSecretKey(SignatureAlgorithm signatureAlgorithm) {
         this.signatureAlgorithm = signatureAlgorithm;
     }
 
@@ -29,7 +25,7 @@ class JwtWithSecretKey implements Jwt<SecretKey> {
     }
 
     @Override
-    public String createClaimsJws(@NotNull Claims claims, @NotEmpty byte[] secret) {
+    public String createClaimsJws(Claims claims, byte[] secret) {
         try {
             return Jwts.builder()
                     .setClaims(claims)
@@ -41,7 +37,7 @@ class JwtWithSecretKey implements Jwt<SecretKey> {
     }
 
     @Override
-    public Claims parseClaimsJws(@NotBlank String claimsJws, @NotEmpty byte[] secret) {
+    public Claims parseClaimsJws(String claimsJws, byte[] secret) {
         try {
             return Jwts.parserBuilder()
                     .setSigningKey(new SecretKeySpec(secret, signatureAlgorithm.getJcaName()))
