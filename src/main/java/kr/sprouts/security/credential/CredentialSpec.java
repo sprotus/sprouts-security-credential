@@ -1,11 +1,7 @@
 package kr.sprouts.security.credential;
 
-import kr.sprouts.validation.constraints.annotation.Uuid;
-
 class CredentialSpec {
-    @Uuid
     private String id;
-    
     private String name;
     private String type;
     private String algorithm;
