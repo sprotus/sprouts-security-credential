@@ -3,6 +3,9 @@ package kr.sprouts.security.credential.cipher;
 import javax.crypto.BadPaddingException;
 import javax.crypto.IllegalBlockSizeException;
 import javax.crypto.NoSuchPaddingException;
+import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Size;
 import java.nio.charset.StandardCharsets;
 import java.security.InvalidKeyException;
 import java.security.KeyFactory;
@@ -16,8 +19,11 @@ import java.security.spec.PKCS8EncodedKeySpec;
 import java.security.spec.X509EncodedKeySpec;
 
 class CipherWithKeyPair implements Cipher<KeyPair> {
+    @NotBlank
     private final String encryptAlgorithm;
+    @NotBlank
     private final String keyAlgorithm;
+    @NotNull @Size
     private final Integer keySize;
 
     CipherWithKeyPair(String encryptAlgorithm, String keyAlgorithm, Integer keySize) {

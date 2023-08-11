@@ -5,6 +5,7 @@ import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.SignatureAlgorithm;
 import io.jsonwebtoken.security.Keys;
 
+import javax.validation.constraints.NotNull;
 import java.security.KeyFactory;
 import java.security.KeyPair;
 import java.security.NoSuchAlgorithmException;
@@ -13,6 +14,7 @@ import java.security.spec.PKCS8EncodedKeySpec;
 import java.security.spec.X509EncodedKeySpec;
 
 class JwtWithKeyPair implements Jwt<KeyPair> {
+    @NotNull
     private final SignatureAlgorithm signatureAlgorithm;
 
     JwtWithKeyPair(SignatureAlgorithm signatureAlgorithm) {

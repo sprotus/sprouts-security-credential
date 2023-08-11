@@ -8,6 +8,9 @@ import javax.crypto.SecretKeyFactory;
 import javax.crypto.spec.IvParameterSpec;
 import javax.crypto.spec.PBEKeySpec;
 import javax.crypto.spec.PBEParameterSpec;
+import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Size;
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.nio.charset.StandardCharsets;
@@ -20,12 +23,19 @@ import java.security.spec.KeySpec;
 import java.util.Arrays;
 
 class CipherWithPassword implements Cipher<byte[]> {
+    @NotBlank
     private final String encryptAlgorithm;
+    @NotBlank
     private final String keyAlgorithm;
+    @NotNull @Size
     private final Integer ivSize;
+    @NotNull @Size
     private final Integer saltSize;
+    @NotNull @Size
     private final Integer keySize;
+    @NotNull @Size
     private final Integer keySpecIterationCount;
+    @NotNull @Size
     private final Integer parameterIterationCount;
 
     CipherWithPassword(String encryptAlgorithm, Integer ivSize, Integer saltSize, Integer keySize, Integer keySpecIterationCount, Integer parameterIterationCount) {

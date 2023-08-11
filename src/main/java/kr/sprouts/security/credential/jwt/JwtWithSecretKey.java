@@ -7,8 +7,10 @@ import io.jsonwebtoken.security.Keys;
 
 import javax.crypto.SecretKey;
 import javax.crypto.spec.SecretKeySpec;
+import javax.validation.constraints.NotNull;
 
 class JwtWithSecretKey implements Jwt<SecretKey> {
+    @NotNull
     private final SignatureAlgorithm signatureAlgorithm;
 
     JwtWithSecretKey(SignatureAlgorithm signatureAlgorithm) {

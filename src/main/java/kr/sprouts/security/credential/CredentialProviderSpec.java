@@ -1,8 +1,13 @@
 package kr.sprouts.security.credential;
 
+import kr.sprouts.validation.constraints.annotation.Uuid;
+
+import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.NotEmpty;
 import java.util.List;
 
 public class CredentialProviderSpec extends CredentialSpec {
+    @NotEmpty
     private List<TargetConsumer> targetConsumers;
 
     private CredentialProviderSpec() { }
@@ -21,7 +26,9 @@ public class CredentialProviderSpec extends CredentialSpec {
     }
 
     public static class TargetConsumer {
+        @Uuid
         private String id;
+        @NotBlank
         private String name;
 
         private TargetConsumer() { }

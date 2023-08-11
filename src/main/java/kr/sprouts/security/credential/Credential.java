@@ -1,11 +1,17 @@
 package kr.sprouts.security.credential;
 
+import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.NotEmpty;
+import javax.validation.constraints.NotNull;
 import java.util.List;
 import java.util.UUID;
 
 public class Credential {
+    @NotNull
     private final UUID providerId;
+    @NotEmpty
     private final List<UUID> consumerIds;
+    @NotBlank
     private final String value;
 
     private Credential(UUID providerId, List<UUID> consumerIds, String value) {

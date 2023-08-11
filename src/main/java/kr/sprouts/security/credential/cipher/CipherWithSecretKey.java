@@ -7,6 +7,9 @@ import javax.crypto.NoSuchPaddingException;
 import javax.crypto.SecretKey;
 import javax.crypto.spec.IvParameterSpec;
 import javax.crypto.spec.SecretKeySpec;
+import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Size;
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.nio.charset.StandardCharsets;
@@ -17,9 +20,13 @@ import java.security.SecureRandom;
 import java.util.Arrays;
 
 class CipherWithSecretKey implements Cipher<SecretKey> {
+    @NotBlank
     private final String encryptAlgorithm;
+    @NotBlank
     private final String keyAlgorithm;
+    @NotNull @Size
     private final Integer ivSize;
+    @NotNull @Size
     private final Integer keySize;
 
     CipherWithSecretKey(String encryptAlgorithm, String keyAlgorithm, Integer ivSize, Integer keySize) {

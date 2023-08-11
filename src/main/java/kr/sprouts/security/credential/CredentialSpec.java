@@ -1,11 +1,21 @@
 package kr.sprouts.security.credential;
 
+import kr.sprouts.validation.constraints.annotation.Uuid;
+
+import javax.validation.constraints.NotBlank;
+
 class CredentialSpec {
+    @Uuid
     private String id;
+    @NotBlank
     private String name;
+    @NotBlank
     private String type;
+    @NotBlank
     private String algorithm;
+    @NotBlank
     private String codec;
+    @NotBlank
     private String encodedSecret;
 
     CredentialSpec() { }

@@ -1,11 +1,16 @@
 package kr.sprouts.security.credential;
 
+import javax.validation.constraints.NotEmpty;
+import javax.validation.constraints.NotNull;
 import java.util.List;
 import java.util.UUID;
 
 public class Principal<S extends Subject> {
+    @NotNull
     private UUID providerId;
+    @NotEmpty
     private List<UUID> targetConsumers;
+    @NotNull
     private S subject;
 
     private Principal() { }

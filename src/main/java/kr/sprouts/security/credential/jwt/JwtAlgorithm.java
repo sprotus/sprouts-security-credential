@@ -2,6 +2,8 @@ package kr.sprouts.security.credential.jwt;
 
 import io.jsonwebtoken.SignatureAlgorithm;
 
+import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.NotNull;
 import java.util.function.Supplier;
 
 public enum JwtAlgorithm {
@@ -24,7 +26,9 @@ public enum JwtAlgorithm {
         this.jwtSupplier = jwtSupplier;
     }
 
+    @NotBlank
     private final String name;
+    @NotNull
     private final Supplier<Jwt<?>> jwtSupplier;
 
     public static JwtAlgorithm fromName(String name) {

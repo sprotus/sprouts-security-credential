@@ -1,5 +1,7 @@
 package kr.sprouts.security.credential.cipher;
 
+import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.NotNull;
 import java.util.function.Supplier;
 
 public enum CipherAlgorithm {
@@ -14,7 +16,9 @@ public enum CipherAlgorithm {
     PBE_HS512_AES256("PBE_HS512_AES256", () -> new CipherWithPassword("PBEWithHmacSHA512AndAES_256", 16, 128, 256, 65534, 65534)),
     RSA("RSA", () -> new CipherWithKeyPair("RSA/ECB/PKCS1Padding", "RSA", 2048))
     ;
+    @NotBlank
     private final String name;
+    @NotNull
     private final Supplier<Cipher<?>> cipherSupplier;
 
     CipherAlgorithm(String name, Supplier<Cipher<?>> cipherSupplier) {
