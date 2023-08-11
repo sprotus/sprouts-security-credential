@@ -2,7 +2,12 @@ package kr.sprouts.security.credential;
 
 import org.junit.jupiter.api.Test;
 
+import javax.validation.ConstraintViolation;
+import javax.validation.Validation;
+import javax.validation.Validator;
+import javax.validation.ValidatorFactory;
 import java.util.Arrays;
+import java.util.Collection;
 import java.util.UUID;
 import java.util.logging.Logger;
 
@@ -151,5 +156,28 @@ class CredentialProviderConsumerTests {
         Principal<JwtSubject> jwtPrincipal = jwtCredentialConsumer.consume(jwtCredential);
 
         assertEquals(memberId, jwtPrincipal.getSubject().getMemberId());
+    }
+
+    @Test
+    void validate() {
+        try (ValidatorFactory validatorFactory = Validation.buildDefaultValidatorFactory()) {
+            Validator validator = validatorFactory.getValidator();
+
+            CredentialProviderSpec credentialProviderSpec = new CredentialProviderSpec(
+                    "invalid uuid",
+                    " ",
+                    " ",
+                    " ",
+                    " ",
+                    " ",
+                    Arrays.asList(
+                            new CredentialProviderSpec.TargetConsumer("invalid uuid", " "),
+                            new CredentialProviderSpec.TargetConsumer("invalid uuid", " ")
+                    )
+            );
+
+            Collection<ConstraintViolation<CredentialProviderSpec>> constraintViolations = validator.validate(credentialProviderSpec);
+            assertEquals(6, constraintViolations.size());
+        }
     }
 }
