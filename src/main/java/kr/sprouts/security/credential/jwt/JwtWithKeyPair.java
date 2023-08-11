@@ -5,8 +5,6 @@ import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.SignatureAlgorithm;
 import io.jsonwebtoken.security.Keys;
 
-import javax.validation.constraints.NotBlank;
-import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.NotNull;
 import java.security.KeyFactory;
 import java.security.KeyPair;
@@ -19,7 +17,7 @@ class JwtWithKeyPair implements Jwt<KeyPair> {
     @NotNull
     private final SignatureAlgorithm signatureAlgorithm;
 
-    JwtWithKeyPair(@NotNull SignatureAlgorithm signatureAlgorithm) {
+    JwtWithKeyPair(SignatureAlgorithm signatureAlgorithm) {
         this.signatureAlgorithm = signatureAlgorithm;
     }
 
@@ -33,7 +31,7 @@ class JwtWithKeyPair implements Jwt<KeyPair> {
     }
 
     @Override
-    public String createClaimsJws(@NotNull Claims claims, @NotEmpty byte[] privateKeyBytes) {
+    public String createClaimsJws(Claims claims, byte[] privateKeyBytes) {
         try {
             return Jwts.builder()
                     .setClaims(claims)
@@ -45,7 +43,7 @@ class JwtWithKeyPair implements Jwt<KeyPair> {
     }
 
     @Override
-    public Claims parseClaimsJws(@NotBlank String claimsJws, @NotEmpty byte[] publicKeyBytes) {
+    public Claims parseClaimsJws(String claimsJws, byte[] publicKeyBytes) {
         try {
             return Jwts.parserBuilder()
                     .setSigningKey(KeyFactory.getInstance(signatureAlgorithm.getFamilyName()).generatePublic(new X509EncodedKeySpec(publicKeyBytes)))

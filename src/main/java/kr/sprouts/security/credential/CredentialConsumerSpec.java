@@ -1,6 +1,6 @@
 package kr.sprouts.security.credential;
 
-import kr.sprouts.security.credential.annotation.UUID;
+import kr.sprouts.validation.constraints.annotation.Uuid;
 
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotEmpty;
@@ -12,15 +12,7 @@ public class CredentialConsumerSpec extends CredentialSpec {
 
     private CredentialConsumerSpec() { }
 
-    public CredentialConsumerSpec(
-            @NotBlank @UUID String id,
-            @NotBlank String name,
-            @NotBlank String type,
-            @NotBlank String algorithm,
-            @NotBlank String codec,
-            @NotBlank String encodedSecret,
-            @NotEmpty List<ValidProvider> validProviders
-    ) {
+    public CredentialConsumerSpec(String id, String name, String type, String algorithm, String codec, String encodedSecret, List<ValidProvider> validProviders) {
         super(id, name, type, algorithm, codec, encodedSecret);
         this.validProviders = validProviders;
     }
@@ -29,20 +21,19 @@ public class CredentialConsumerSpec extends CredentialSpec {
         return validProviders;
     }
 
-    public void setValidProviders(@NotEmpty List<ValidProvider> validProviders) {
+    public void setValidProviders(List<ValidProvider> validProviders) {
         this.validProviders = validProviders;
     }
 
     public static class ValidProvider {
-        @NotBlank
-        @UUID
+        @Uuid
         private String id;
         @NotBlank
         private String name;
 
         private ValidProvider() { }
 
-        public ValidProvider(@NotBlank @UUID String id, @NotBlank String name) {
+        public ValidProvider(String id, String name) {
             this.id = id;
             this.name = name;
         }
@@ -51,7 +42,7 @@ public class CredentialConsumerSpec extends CredentialSpec {
             return id;
         }
 
-        public void setId(@NotBlank @UUID String id) {
+        public void setId(String id) {
             this.id = id;
         }
 
@@ -59,7 +50,7 @@ public class CredentialConsumerSpec extends CredentialSpec {
             return name;
         }
 
-        public void setName(@NotBlank String name) {
+        public void setName(String name) {
             this.name = name;
         }
     }

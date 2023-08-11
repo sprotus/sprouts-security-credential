@@ -14,12 +14,12 @@ public enum CodecType {
     @NotNull
     private final Supplier<Codec> codecSupplier;
 
-    CodecType(@NotBlank String name, @NotNull Supplier<Codec> codecSupplier) {
+    CodecType(String name, Supplier<Codec> codecSupplier) {
         this.name = name;
         this.codecSupplier = codecSupplier;
     }
 
-    public static CodecType fromName(@NotBlank String name) {
+    public static CodecType fromName(String name) {
         for (CodecType codecType : values()) {
             if (codecType.getName().equalsIgnoreCase(name)) return codecType;
         }

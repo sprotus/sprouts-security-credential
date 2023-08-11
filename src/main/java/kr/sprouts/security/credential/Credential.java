@@ -14,13 +14,13 @@ public class Credential {
     @NotBlank
     private final String value;
 
-    private Credential(@NotNull UUID providerId, @NotEmpty List<UUID> consumerIds, @NotBlank String value) {
+    private Credential(UUID providerId, List<UUID> consumerIds, String value) {
         this.providerId = providerId;
         this.consumerIds = consumerIds;
         this.value = value;
     }
 
-    public static Credential of(@NotNull UUID providerId, @NotEmpty List<UUID> consumerIds, @NotBlank String value) {
+    public static Credential of(UUID providerId, List<UUID> consumerIds, String value) {
         return new Credential(providerId, consumerIds, value);
     }
 

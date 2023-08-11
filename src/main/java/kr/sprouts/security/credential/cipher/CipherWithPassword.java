@@ -9,7 +9,6 @@ import javax.crypto.spec.IvParameterSpec;
 import javax.crypto.spec.PBEKeySpec;
 import javax.crypto.spec.PBEParameterSpec;
 import javax.validation.constraints.NotBlank;
-import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 import java.io.ByteArrayOutputStream;
@@ -39,7 +38,7 @@ class CipherWithPassword implements Cipher<byte[]> {
     @NotNull @Size
     private final Integer parameterIterationCount;
 
-    CipherWithPassword(@NotBlank String encryptAlgorithm, @NotNull @Size Integer ivSize, @NotNull @Size Integer saltSize, @NotNull @Size Integer keySize, @NotNull @Size Integer keySpecIterationCount, @NotNull @Size Integer parameterIterationCount) {
+    CipherWithPassword(String encryptAlgorithm, Integer ivSize, Integer saltSize, Integer keySize, Integer keySpecIterationCount, Integer parameterIterationCount) {
         this.encryptAlgorithm = encryptAlgorithm;
         this.keyAlgorithm = encryptAlgorithm;
         this.ivSize = ivSize;
@@ -61,7 +60,7 @@ class CipherWithPassword implements Cipher<byte[]> {
         }
     }
 
-    private char[] toCharArray(@NotEmpty byte[] bytes) {
+    private char[] toCharArray(byte[] bytes) {
         StringBuilder buffer = new StringBuilder();
 
         for (byte aByte : bytes) {
@@ -82,7 +81,7 @@ class CipherWithPassword implements Cipher<byte[]> {
     }
 
     @Override
-    public byte[] encrypt(@NotBlank String plainText, @NotEmpty byte[] secret) {
+    public byte[] encrypt(String plainText, byte[] secret) {
         try {
             byte[] salt = new byte[saltSize];
             new SecureRandom().nextBytes(salt);
@@ -115,7 +114,7 @@ class CipherWithPassword implements Cipher<byte[]> {
     }
 
     @Override
-    public byte[] decrypt(@NotEmpty byte[] encryptedBytes, @NotEmpty byte[] secret) {
+    public byte[] decrypt(byte[] encryptedBytes, byte[] secret) {
         try {
             if (encryptedBytes.length < saltSize + ivSize) throw new DecryptException();
 
@@ -140,7 +139,7 @@ class CipherWithPassword implements Cipher<byte[]> {
     }
 
     @Override
-    public String decryptToString(@NotEmpty byte[] encryptedBytes, @NotEmpty byte[] secret) {
+    public String decryptToString(byte[] encryptedBytes, byte[] secret) {
         return new String(decrypt(encryptedBytes, secret));
     }
 }

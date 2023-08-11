@@ -15,13 +15,13 @@ public class Principal<S extends Subject> {
 
     private Principal() { }
 
-    private Principal(@NotEmpty UUID providerId, @NotEmpty List<UUID> targetConsumers, @NotNull S subject) {
+    private Principal(UUID providerId, List<UUID> targetConsumers, S subject) {
         this.providerId = providerId;
         this.targetConsumers = targetConsumers;
         this.subject = subject;
     }
 
-    public static <S extends Subject> Principal<S> of(@NotEmpty UUID providerId, @NotEmpty List<UUID> targetConsumers, @NotNull S subject) {
+    public static <S extends Subject> Principal<S> of(UUID providerId, List<UUID> targetConsumers, S subject) {
         return new Principal<>(providerId, targetConsumers, subject);
     }
 

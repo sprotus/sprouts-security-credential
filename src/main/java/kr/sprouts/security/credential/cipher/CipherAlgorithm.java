@@ -16,15 +16,17 @@ public enum CipherAlgorithm {
     PBE_HS512_AES256("PBE_HS512_AES256", () -> new CipherWithPassword("PBEWithHmacSHA512AndAES_256", 16, 128, 256, 65534, 65534)),
     RSA("RSA", () -> new CipherWithKeyPair("RSA/ECB/PKCS1Padding", "RSA", 2048))
     ;
+    @NotBlank
     private final String name;
+    @NotNull
     private final Supplier<Cipher<?>> cipherSupplier;
 
-    CipherAlgorithm(@NotBlank String name, @NotNull Supplier<Cipher<?>> cipherSupplier) {
+    CipherAlgorithm(String name, Supplier<Cipher<?>> cipherSupplier) {
         this.name = name;
         this.cipherSupplier = cipherSupplier;
     }
 
-    public static CipherAlgorithm fromName(@NotBlank String name) {
+    public static CipherAlgorithm fromName(String name) {
         for (CipherAlgorithm cipherAlgorithm : values()) {
             if (cipherAlgorithm.getName().equalsIgnoreCase(name)) return cipherAlgorithm;
         }

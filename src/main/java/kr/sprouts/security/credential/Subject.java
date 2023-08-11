@@ -9,7 +9,7 @@ public class Subject {
 
     public Subject() { }
 
-    public Subject(@NotNull UUID memberId) {
+    public Subject(UUID memberId) {
         this.memberId = memberId;
     }
 

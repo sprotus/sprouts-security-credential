@@ -21,7 +21,7 @@ public enum JwtAlgorithm {
     PS512("PS512", () -> new JwtWithKeyPair(SignatureAlgorithm.PS512)),
     ;
 
-    JwtAlgorithm(@NotBlank String name, @NotNull Supplier<Jwt<?>> jwtSupplier) {
+    JwtAlgorithm(String name, Supplier<Jwt<?>> jwtSupplier) {
         this.name = name;
         this.jwtSupplier = jwtSupplier;
     }
@@ -31,7 +31,7 @@ public enum JwtAlgorithm {
     @NotNull
     private final Supplier<Jwt<?>> jwtSupplier;
 
-    public static JwtAlgorithm fromName(@NotBlank String name) {
+    public static JwtAlgorithm fromName(String name) {
         for (JwtAlgorithm jwtAlgorithm : values()) {
             if (jwtAlgorithm.getName().equalsIgnoreCase(name)) return jwtAlgorithm;
         }

@@ -8,7 +8,6 @@ import javax.crypto.SecretKey;
 import javax.crypto.spec.IvParameterSpec;
 import javax.crypto.spec.SecretKeySpec;
 import javax.validation.constraints.NotBlank;
-import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 import java.io.ByteArrayOutputStream;
@@ -30,7 +29,7 @@ class CipherWithSecretKey implements Cipher<SecretKey> {
     @NotNull @Size
     private final Integer keySize;
 
-    CipherWithSecretKey(@NotBlank String encryptAlgorithm, @NotBlank String keyAlgorithm, @NotNull @Size Integer ivSize, @NotNull @Size Integer keySize) {
+    CipherWithSecretKey(String encryptAlgorithm, String keyAlgorithm, Integer ivSize, Integer keySize) {
         this.encryptAlgorithm = encryptAlgorithm;
         this.keyAlgorithm = keyAlgorithm;
         this.ivSize = ivSize;
@@ -50,7 +49,7 @@ class CipherWithSecretKey implements Cipher<SecretKey> {
     }
 
     @Override
-    public byte[] encrypt(@NotBlank String plainText, @NotEmpty byte[] secret) {
+    public byte[] encrypt(String plainText, byte[] secret) {
         try {
             SecretKey secretKey = new SecretKeySpec(secret, keyAlgorithm);
 
@@ -78,7 +77,7 @@ class CipherWithSecretKey implements Cipher<SecretKey> {
     }
 
     @Override
-    public byte[] decrypt(@NotEmpty byte[] encryptedBytes, @NotEmpty byte[] secret) {
+    public byte[] decrypt(byte[] encryptedBytes, byte[] secret) {
         try {
             SecretKey secretKey = new SecretKeySpec(secret, keyAlgorithm);
 
@@ -98,7 +97,7 @@ class CipherWithSecretKey implements Cipher<SecretKey> {
     }
 
     @Override
-    public String decryptToString(@NotEmpty byte[] encryptedBytes, @NotEmpty byte[] secret) {
+    public String decryptToString(byte[] encryptedBytes, byte[] secret) {
         return new String(decrypt(encryptedBytes, secret));
     }
 }

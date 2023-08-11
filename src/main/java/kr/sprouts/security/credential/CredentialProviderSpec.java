@@ -1,6 +1,6 @@
 package kr.sprouts.security.credential;
 
-import kr.sprouts.security.credential.annotation.UUID;
+import kr.sprouts.validation.constraints.annotation.Uuid;
 
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotEmpty;
@@ -12,15 +12,7 @@ public class CredentialProviderSpec extends CredentialSpec {
 
     private CredentialProviderSpec() { }
 
-    public CredentialProviderSpec(
-            @NotBlank @UUID String id,
-            @NotBlank String name,
-            @NotBlank String type,
-            @NotBlank String algorithm,
-            @NotBlank String codec,
-            @NotBlank String encodedSecret,
-            @NotEmpty List<TargetConsumer> targetConsumers
-    ) {
+    public CredentialProviderSpec(String id, String name, String type, String algorithm, String codec, String encodedSecret, List<TargetConsumer> targetConsumers) {
         super(id, name, type, algorithm, codec, encodedSecret);
         this.targetConsumers = targetConsumers;
     }
@@ -29,20 +21,19 @@ public class CredentialProviderSpec extends CredentialSpec {
         return targetConsumers;
     }
 
-    public void setTargetConsumers(@NotEmpty List<TargetConsumer> targetConsumers) {
+    public void setTargetConsumers(List<TargetConsumer> targetConsumers) {
         this.targetConsumers = targetConsumers;
     }
 
     public static class TargetConsumer {
-        @NotBlank
-        @UUID
+        @Uuid
         private String id;
         @NotBlank
         private String name;
 
         private TargetConsumer() { }
 
-        public TargetConsumer(@NotBlank @UUID String id, @NotBlank String name) {
+        public TargetConsumer(String id, String name) {
             this.id = id;
             this.name = name;
         }
@@ -51,7 +42,7 @@ public class CredentialProviderSpec extends CredentialSpec {
             return id;
         }
 
-        public void setId(@NotBlank @UUID String id) {
+        public void setId(String id) {
             this.id = id;
         }
 
@@ -59,7 +50,7 @@ public class CredentialProviderSpec extends CredentialSpec {
             return name;
         }
 
-        public void setName(@NotBlank String name) {
+        public void setName(String name) {
             this.name = name;
         }
     }
