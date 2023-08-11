@@ -42,6 +42,4 @@ public enum JwtAlgorithm {
     public Supplier<Jwt<?>> getJwtSupplier() {
         return jwtSupplier;
     }
-
-    private static class UnsupportedJwtAlgorithmException extends RuntimeException { }
 }
