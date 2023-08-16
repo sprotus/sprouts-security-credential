@@ -4,41 +4,41 @@ import javax.validation.constraints.NotBlank;
 
 public class CredentialHeaderSpec {
     @NotBlank
-    private String providerHeaderKey;
+    private String providerHeaderName;
     @NotBlank
-    private String consumerHeaderKey;
+    private String consumerHeaderName;
     @NotBlank
-    private String valueHeaderKey;
+    private String valueHeaderName;
 
     public CredentialHeaderSpec() { }
 
-    public CredentialHeaderSpec(String providerHeaderKey, String consumerHeaderKey, String valueHeaderKey) {
-        this.providerHeaderKey = providerHeaderKey;
-        this.consumerHeaderKey = consumerHeaderKey;
-        this.valueHeaderKey = valueHeaderKey;
+    public CredentialHeaderSpec(String providerHeaderName, String consumerHeaderName, String valueHeaderName) {
+        this.providerHeaderName = providerHeaderName;
+        this.consumerHeaderName = consumerHeaderName;
+        this.valueHeaderName = valueHeaderName;
     }
 
-    public String getProviderHeaderKey() {
-        return providerHeaderKey;
+    public String getProviderHeaderName() {
+        return providerHeaderName;
     }
 
-    public String getConsumerHeaderKey() {
-        return consumerHeaderKey;
+    public String getConsumerHeaderName() {
+        return consumerHeaderName;
     }
 
-    public String getValueHeaderKey() {
-        return valueHeaderKey;
+    public String getValueHeaderName() {
+        return valueHeaderName;
     }
 
-    public void setProviderHeaderKey(String providerHeaderKey) {
-        this.providerHeaderKey = providerHeaderKey;
+    public void setProviderHeaderName(String providerHeaderName) {
+        this.providerHeaderName = providerHeaderName;
     }
 
-    public void setConsumerHeaderKey(String consumerHeaderKey) {
-        this.consumerHeaderKey = consumerHeaderKey;
+    public void setConsumerHeaderName(String consumerHeaderName) {
+        this.consumerHeaderName = consumerHeaderName;
     }
 
-    public void setValueHeaderKey(String valueHeaderKey) {
-        this.valueHeaderKey = valueHeaderKey;
+    public void setValueHeaderName(String valueHeaderName) {
+        this.valueHeaderName = valueHeaderName;
     }
 }
