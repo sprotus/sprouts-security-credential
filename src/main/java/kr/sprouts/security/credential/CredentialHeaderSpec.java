@@ -10,7 +10,7 @@ public class CredentialHeaderSpec {
     @NotBlank
     private String valueHeaderName;
 
-    public CredentialHeaderSpec() { }
+    private CredentialHeaderSpec() { }
 
     public CredentialHeaderSpec(String providerHeaderName, String consumerHeaderName, String valueHeaderName) {
         this.providerHeaderName = providerHeaderName;
@@ -22,20 +22,20 @@ public class CredentialHeaderSpec {
         return providerHeaderName;
     }
 
-    public String getConsumerHeaderName() {
-        return consumerHeaderName;
-    }
-
-    public String getValueHeaderName() {
-        return valueHeaderName;
-    }
-
     public void setProviderHeaderName(String providerHeaderName) {
         this.providerHeaderName = providerHeaderName;
     }
 
+    public String getConsumerHeaderName() {
+        return consumerHeaderName;
+    }
+
     public void setConsumerHeaderName(String consumerHeaderName) {
         this.consumerHeaderName = consumerHeaderName;
+    }
+
+    public String getValueHeaderName() {
+        return valueHeaderName;
     }
 
     public void setValueHeaderName(String valueHeaderName) {
