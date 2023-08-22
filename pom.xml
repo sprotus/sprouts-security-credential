@@ -13,6 +13,7 @@
         <!-- dependency -->
         <jackson.version>2.14.2</jackson.version>
         <jjwt.version>0.11.5</jjwt.version>
+        <sprouts.validation.api.version>0.0.3</sprouts.validation.api.version>
         <!-- plugin -->
         <maven.compiler.plugin.version>3.11.0</maven.compiler.plugin.version>
         <maven.resources.plugin.version>3.3.1</maven.resources.plugin.version>
@@ -57,11 +58,11 @@
             <version>${jackson.version}</version>
         </dependency>
 
-        <!-- sprouts.kr -->
+        <!-- validation -->
         <dependency>
             <groupId>kr.sprouts.framework.library</groupId>
             <artifactId>sprouts-validation-api</artifactId>
-            <version>0.0.3</version>
+            <version>${sprouts.validation.api.version}</version>
         </dependency>
 
         <!-- for test(PS256, PS384, PS512 since JDK <= 10) -->
