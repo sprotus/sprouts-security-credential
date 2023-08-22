@@ -3,7 +3,7 @@
     <modelVersion>4.0.0</modelVersion>
     <groupId>kr.sprouts.framework.library</groupId>
     <artifactId>sprouts-security-credential</artifactId>
-    <version>0.0.5-SNAPSHOT</version>
+    <version>0.0.5</version>
     <name>sprouts-security-credential</name>
     <packaging>jar</packaging>
     <properties>
