@@ -59,9 +59,9 @@
 
         <!-- sprouts.kr -->
         <dependency>
-            <groupId>kr.sprouts.validation</groupId>
+            <groupId>kr.sprouts.framework.library</groupId>
             <artifactId>sprouts-validation-api</artifactId>
-            <version>0.0.2</version>
+            <version>0.0.3</version>
         </dependency>
 
         <!-- for test(PS256, PS384, PS512 since JDK <= 10) -->
