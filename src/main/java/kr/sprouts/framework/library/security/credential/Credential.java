@@ -3,10 +3,11 @@ package kr.sprouts.framework.library.security.credential;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.NotNull;
+import java.io.Serializable;
 import java.util.List;
 import java.util.UUID;
 
-public class Credential {
+public class Credential implements Serializable {
     @NotNull
     private final UUID providerId;
     @NotEmpty
