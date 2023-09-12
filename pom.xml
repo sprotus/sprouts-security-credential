@@ -28,10 +28,10 @@
         <junit.jupiter.version>5.9.3</junit.jupiter.version>
     </properties>
     <repositories>
-        <!-- personal repository -->
+        <!-- personal-repository -->
         <repository>
-            <id>personal-public</id>
-            <url>https://nexus.sprouts.kr/repository/maven/</url>
+            <id>personal-repository</id>
+            <url>https://nexus.devops.sprouts.kr/repository/maven/</url>
         </repository>
     </repositories>
     <dependencies>
