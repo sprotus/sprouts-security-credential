@@ -19,8 +19,6 @@
         <maven.resources.plugin.version>3.3.1</maven.resources.plugin.version>
         <maven.surefire.plugin.version>2.22.2</maven.surefire.plugin.version>
         <junit.platform.surefire.provider.version>1.2.0</junit.platform.surefire.provider.version>
-        <build.helper.maven.plugin.version>3.3.0</build.helper.maven.plugin.version>
-        <versions.maven.plugin.version>2.10.0</versions.maven.plugin.version>
         <!-- test -->
         <bouncycastle.version>1.70</bouncycastle.version>
         <hibernate.validator.version>6.2.5.Final</hibernate.validator.version>
@@ -133,24 +131,6 @@
                     </additionalClasspathElements>
                 </configuration>
             </plugin>
-            <plugin>
-                <groupId>org.codehaus.mojo</groupId>
-                <artifactId>build-helper-maven-plugin</artifactId>
-                <version>${build.helper.maven.plugin.version}</version>
-                <executions>
-                    <execution>
-                        <id>parse-version</id>
-                        <goals>
-                            <goal>parse-version</goal>
-                        </goals>
-                    </execution>
-                </executions>
-            </plugin>
-            <plugin>
-                <groupId>org.codehaus.mojo</groupId>
-                <artifactId>versions-maven-plugin</artifactId>
-                <version>${versions.maven.plugin.version}</version>
-            </plugin>
         </plugins>
     </build>
     <profiles>
@@ -168,68 +148,6 @@
                     <url>${CI_API_V4_URL}/projects/${CI_PROJECT_ID}/packages/maven/</url>
                 </snapshotRepository>
             </distributionManagement>
-        </profile>
-        <profile>
-            <id>snapshot-patch</id>
-            <activation>
-                <property>
-                    <name>snapshotPatch</name>
-                </property>
-            </activation>
-            <build>
-                <plugins>
-                    <plugin>
-                        <groupId>org.codehaus.mojo</groupId>
-                        <artifactId>versions-maven-plugin</artifactId>
-                        <version>${versions.maven.plugin.version}</version>
-                        <executions>
-                            <execution>
-                                <goals>
-                                    <goal>set</goal>
-                                </goals>
-                                <phase>validate</phase>
-                                <configuration>
-                                    <newVersion>
-                                        <!--suppress UnresolvedMavenProperty -->
-                                        ${parsedVersion.majorVersion}.${parsedVersion.minorVersion}.${parsedVersion.nextIncrementalVersion}-SNAPSHOT
-                                    </newVersion>
-                                </configuration>
-                            </execution>
-                        </executions>
-                    </plugin>
-                </plugins>
-            </build>
-        </profile>
-        <profile>
-            <id>release-patch</id>
-            <activation>
-                <property>
-                    <name>releasePatch</name>
-                </property>
-            </activation>
-            <build>
-                <plugins>
-                    <plugin>
-                        <groupId>org.codehaus.mojo</groupId>
-                        <artifactId>versions-maven-plugin</artifactId>
-                        <version>${versions.maven.plugin.version}</version>
-                        <executions>
-                            <execution>
-                                <goals>
-                                    <goal>set</goal>
-                                </goals>
-                                <phase>validate</phase>
-                                <configuration>
-                                    <newVersion>
-                                        <!--suppress UnresolvedMavenProperty -->
-                                        ${parsedVersion.majorVersion}.${parsedVersion.minorVersion}.${parsedVersion.incrementalVersion}
-                                    </newVersion>
-                                </configuration>
-                            </execution>
-                        </executions>
-                    </plugin>
-                </plugins>
-            </build>
         </profile>
     </profiles>
 </project>
