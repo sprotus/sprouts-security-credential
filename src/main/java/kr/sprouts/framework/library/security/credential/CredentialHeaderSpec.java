@@ -1,6 +1,6 @@
 package kr.sprouts.framework.library.security.credential;
 
-import javax.validation.constraints.NotBlank;
+import jakarta.validation.constraints.NotBlank;
 
 public class CredentialHeaderSpec {
     @NotBlank
