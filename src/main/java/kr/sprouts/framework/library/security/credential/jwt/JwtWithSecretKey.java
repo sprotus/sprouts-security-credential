@@ -7,7 +7,7 @@ import io.jsonwebtoken.security.Keys;
 
 import javax.crypto.SecretKey;
 import javax.crypto.spec.SecretKeySpec;
-import javax.validation.constraints.NotNull;
+import jakarta.validation.constraints.NotNull;
 
 class JwtWithSecretKey implements Jwt<SecretKey> {
     @NotNull

@@ -1,9 +1,9 @@
 package kr.sprouts.framework.library.security.credential;
 
+import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.NotEmpty;
 import kr.sprouts.framework.library.validation.constraints.annotation.Uuid;
 
-import javax.validation.constraints.NotBlank;
-import javax.validation.constraints.NotEmpty;
 import java.util.List;
 
 public class CredentialConsumerSpec extends CredentialSpec {
