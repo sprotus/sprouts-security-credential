@@ -1,7 +1,6 @@
 package kr.sprouts.framework.library.security.credential;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
-import com.fasterxml.jackson.databind.ObjectMapper;
 import io.jsonwebtoken.Claims;
 import kr.sprouts.framework.library.security.credential.codec.Codec;
 import kr.sprouts.framework.library.security.credential.codec.CodecType;
@@ -14,7 +13,6 @@ import java.util.concurrent.TimeUnit;
 import java.util.stream.Collectors;
 
 public class JwtCredentialConsumer implements CredentialConsumer<JwtSubject> {
-    private final ObjectMapper objectMapper = new ObjectMapper();
     private final UUID id;
     private final String name;
     private final Codec codec;
