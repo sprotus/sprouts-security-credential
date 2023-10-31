@@ -1,7 +1,5 @@
 package kr.sprouts.framework.library.security.credential;
 
-import com.fasterxml.jackson.core.JsonProcessingException;
-import com.fasterxml.jackson.databind.ObjectMapper;
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.Jwts;
 import kr.sprouts.framework.library.security.credential.codec.Codec;
@@ -16,7 +14,6 @@ import java.util.UUID;
 import java.util.stream.Collectors;
 
 public class JwtCredentialProvider implements CredentialProvider<JwtSubject> {
-    private final ObjectMapper objectMapper = new ObjectMapper();
     private final UUID id;
     private final String name;
     private final Codec codec;
@@ -67,17 +64,16 @@ public class JwtCredentialProvider implements CredentialProvider<JwtSubject> {
         }
     }
 
-    private Claims claims(Principal<JwtSubject> principal) throws JsonProcessingException {
+    private Claims claims(Principal<JwtSubject> principal) {
         LocalDateTime currentDateTime = LocalDateTime.now();
 
-        Claims claims = Jwts.claims();
-        claims.setIssuer(principal.getProviderId().toString());
-        claims.setSubject(principal.getSubject().getMemberId().toString());
-        claims.setAudience(objectMapper.writeValueAsString(principal.getTargetConsumers()));
-        claims.setIssuedAt(Timestamp.valueOf(currentDateTime));
-        claims.setNotBefore(Timestamp.valueOf(currentDateTime.minusSeconds(60)));
-        claims.setExpiration(Timestamp.valueOf(currentDateTime.plusMinutes(principal.getSubject().getValidityInMinutes())));
-
-        return claims;
+        return Jwts.claims()
+                .issuer(principal.getProviderId().toString())
+                .subject(principal.getSubject().getMemberId().toString())
+                .audience().add(principal.getTargetConsumers().stream().map(UUID::toString).collect(Collectors.toList())).and()
+                .issuedAt(Timestamp.valueOf(currentDateTime))
+                .notBefore(Timestamp.valueOf(currentDateTime.minusSeconds(60)))
+                .expiration(Timestamp.valueOf(currentDateTime.plusMinutes(principal.getSubject().getValidityInMinutes())))
+                .build();
     }
 }

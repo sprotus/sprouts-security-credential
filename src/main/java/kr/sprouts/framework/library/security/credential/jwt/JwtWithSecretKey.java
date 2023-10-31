@@ -30,8 +30,8 @@ class JwtWithSecretKey implements Jwt<SecretKey> {
     public String createClaimsJws(Claims claims, byte[] secret) {
         try {
             return Jwts.builder()
-                    .setClaims(claims)
-                    .signWith(new SecretKeySpec(secret, signatureAlgorithm.getJcaName()), signatureAlgorithm)
+                    .claims(claims)
+                    .signWith(new SecretKeySpec(secret, signatureAlgorithm.getJcaName()))
                     .compact();
         } catch (RuntimeException e) {
             throw new ClaimsJwsCreateException(e);
@@ -41,11 +41,11 @@ class JwtWithSecretKey implements Jwt<SecretKey> {
     @Override
     public Claims parseClaimsJws(String claimsJws, byte[] secret) {
         try {
-            return Jwts.parserBuilder()
-                    .setSigningKey(new SecretKeySpec(secret, signatureAlgorithm.getJcaName()))
+            return Jwts.parser()
+                    .verifyWith(new SecretKeySpec(secret, signatureAlgorithm.getJcaName()))
                     .build()
-                    .parseClaimsJws(claimsJws)
-                    .getBody();
+                    .parseSignedClaims(claimsJws)
+                    .getPayload();
         } catch (RuntimeException e) {
             throw new ClaimsJwsParseException(e);
         }

@@ -34,8 +34,8 @@ class JwtWithKeyPair implements Jwt<KeyPair> {
     public String createClaimsJws(Claims claims, byte[] privateKeyBytes) {
         try {
             return Jwts.builder()
-                    .setClaims(claims)
-                    .signWith(KeyFactory.getInstance(signatureAlgorithm.getFamilyName()).generatePrivate(new PKCS8EncodedKeySpec(privateKeyBytes)), signatureAlgorithm)
+                    .claims(claims)
+                    .signWith(KeyFactory.getInstance(signatureAlgorithm.getFamilyName()).generatePrivate(new PKCS8EncodedKeySpec(privateKeyBytes)))
                     .compact();
         } catch (NoSuchAlgorithmException | InvalidKeySpecException e) {
             throw new ClaimsJwsCreateException(e);
@@ -45,11 +45,11 @@ class JwtWithKeyPair implements Jwt<KeyPair> {
     @Override
     public Claims parseClaimsJws(String claimsJws, byte[] publicKeyBytes) {
         try {
-            return Jwts.parserBuilder()
-                    .setSigningKey(KeyFactory.getInstance(signatureAlgorithm.getFamilyName()).generatePublic(new X509EncodedKeySpec(publicKeyBytes)))
+            return Jwts.parser()
+                    .verifyWith(KeyFactory.getInstance(signatureAlgorithm.getFamilyName()).generatePublic(new X509EncodedKeySpec(publicKeyBytes)))
                     .build()
-                    .parseClaimsJws(claimsJws)
-                    .getBody();
+                    .parseSignedClaims(claimsJws)
+                    .getPayload();
         } catch (NoSuchAlgorithmException | InvalidKeySpecException e) {
             throw new ClaimsJwsParseException(e);
         }

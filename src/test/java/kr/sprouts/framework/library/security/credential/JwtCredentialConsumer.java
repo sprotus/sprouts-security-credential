@@ -1,7 +1,6 @@
 package kr.sprouts.framework.library.security.credential;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
-import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import io.jsonwebtoken.Claims;
 import kr.sprouts.framework.library.security.credential.codec.Codec;
@@ -69,7 +68,7 @@ public class JwtCredentialConsumer implements CredentialConsumer<JwtSubject> {
     private Principal<JwtSubject> principal(Claims claims) throws JsonProcessingException {
         return Principal.of(
                 UUID.fromString(claims.getIssuer()),
-                objectMapper.readValue(claims.getAudience(), new TypeReference<>() { }),
+                claims.getAudience().stream().map(UUID::fromString).collect(Collectors.toList()),
                 JwtSubject.of(
                         UUID.fromString(claims.getSubject()),
                         TimeUnit.MINUTES.convert(Math.abs(claims.getExpiration().getTime() - claims.getIssuedAt().getTime()), TimeUnit.MILLISECONDS)
