@@ -49,6 +49,7 @@ class JwtWithKeyPair implements Jwt<KeyPair> {
         try {
             return Jwts.parser()
                     .verifyWith(KeyFactory.getInstance(familyName).generatePublic(new X509EncodedKeySpec(publicKeyBytes)))
+                    .clockSkewSeconds(120) // Accounting for Clock Skew 2 minutes
                     .build()
                     .parseSignedClaims(claimsJws)
                     .getPayload();

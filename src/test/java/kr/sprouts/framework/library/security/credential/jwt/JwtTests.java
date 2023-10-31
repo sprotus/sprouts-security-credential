@@ -66,7 +66,7 @@ class JwtTests {
                 .subject(subject)
                 .audience().add(audience).and()
                 .issuedAt(Timestamp.valueOf(currentDateTime))
-                .notBefore(Timestamp.valueOf(currentDateTime.minusSeconds(60)))
+                .notBefore(Timestamp.valueOf(currentDateTime))
                 .expiration(Timestamp.valueOf(current.plusSeconds(60)))
                 .build();
     }

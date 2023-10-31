@@ -42,6 +42,7 @@ class JwtWithSecretKey implements Jwt<SecretKey> {
         try {
             return Jwts.parser()
                     .verifyWith(Keys.hmacShaKeyFor(secret))
+                    .clockSkewSeconds(120) // Accounting for Clock Skew 2 minutes
                     .build()
                     .parseSignedClaims(claimsJws)
                     .getPayload();
