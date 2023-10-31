@@ -2,8 +2,7 @@ package kr.sprouts.framework.library.security.credential.jwt;
 
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.Jwts;
-import io.jsonwebtoken.SignatureAlgorithm;
-import io.jsonwebtoken.security.Keys;
+import io.jsonwebtoken.security.SignatureAlgorithm;
 import jakarta.validation.constraints.NotNull;
 
 import java.security.KeyFactory;
@@ -16,15 +15,18 @@ import java.security.spec.X509EncodedKeySpec;
 class JwtWithKeyPair implements Jwt<KeyPair> {
     @NotNull
     private final SignatureAlgorithm signatureAlgorithm;
+    @NotNull
+    private final String familyName;
 
-    JwtWithKeyPair(SignatureAlgorithm signatureAlgorithm) {
+    public JwtWithKeyPair(SignatureAlgorithm signatureAlgorithm, String familyName) {
         this.signatureAlgorithm = signatureAlgorithm;
+        this.familyName = familyName;
     }
 
     @Override
     public KeyPair generateSecret() {
         try {
-            return Keys.keyPairFor(signatureAlgorithm);
+            return signatureAlgorithm.keyPair().build();
         } catch (RuntimeException e) {
             throw new GenerateSecretException(e);
         }
@@ -35,7 +37,7 @@ class JwtWithKeyPair implements Jwt<KeyPair> {
         try {
             return Jwts.builder()
                     .claims(claims)
-                    .signWith(KeyFactory.getInstance(signatureAlgorithm.getFamilyName()).generatePrivate(new PKCS8EncodedKeySpec(privateKeyBytes)))
+                    .signWith(KeyFactory.getInstance(familyName).generatePrivate(new PKCS8EncodedKeySpec(privateKeyBytes)))
                     .compact();
         } catch (NoSuchAlgorithmException | InvalidKeySpecException e) {
             throw new ClaimsJwsCreateException(e);
@@ -46,7 +48,7 @@ class JwtWithKeyPair implements Jwt<KeyPair> {
     public Claims parseClaimsJws(String claimsJws, byte[] publicKeyBytes) {
         try {
             return Jwts.parser()
-                    .verifyWith(KeyFactory.getInstance(signatureAlgorithm.getFamilyName()).generatePublic(new X509EncodedKeySpec(publicKeyBytes)))
+                    .verifyWith(KeyFactory.getInstance(familyName).generatePublic(new X509EncodedKeySpec(publicKeyBytes)))
                     .build()
                     .parseSignedClaims(claimsJws)
                     .getPayload();

@@ -2,25 +2,24 @@ package kr.sprouts.framework.library.security.credential.jwt;
 
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.Jwts;
-import io.jsonwebtoken.SignatureAlgorithm;
 import io.jsonwebtoken.security.Keys;
+import io.jsonwebtoken.security.MacAlgorithm;
 import jakarta.validation.constraints.NotNull;
 
 import javax.crypto.SecretKey;
-import javax.crypto.spec.SecretKeySpec;
 
 class JwtWithSecretKey implements Jwt<SecretKey> {
     @NotNull
-    private final SignatureAlgorithm signatureAlgorithm;
+    private final MacAlgorithm macAlgorithm;
 
-    JwtWithSecretKey(SignatureAlgorithm signatureAlgorithm) {
-        this.signatureAlgorithm = signatureAlgorithm;
+    JwtWithSecretKey(MacAlgorithm macAlgorithm) {
+        this.macAlgorithm = macAlgorithm;
     }
 
     @Override
     public SecretKey generateSecret() {
         try {
-            return Keys.secretKeyFor(signatureAlgorithm);
+            return macAlgorithm.key().build();
         } catch (RuntimeException e) {
             throw new GenerateSecretException(e);
         }
@@ -31,7 +30,7 @@ class JwtWithSecretKey implements Jwt<SecretKey> {
         try {
             return Jwts.builder()
                     .claims(claims)
-                    .signWith(new SecretKeySpec(secret, signatureAlgorithm.getJcaName()))
+                    .signWith(Keys.hmacShaKeyFor(secret))
                     .compact();
         } catch (RuntimeException e) {
             throw new ClaimsJwsCreateException(e);
@@ -42,7 +41,7 @@ class JwtWithSecretKey implements Jwt<SecretKey> {
     public Claims parseClaimsJws(String claimsJws, byte[] secret) {
         try {
             return Jwts.parser()
-                    .verifyWith(new SecretKeySpec(secret, signatureAlgorithm.getJcaName()))
+                    .verifyWith(Keys.hmacShaKeyFor(secret))
                     .build()
                     .parseSignedClaims(claimsJws)
                     .getPayload();
