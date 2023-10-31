@@ -2,6 +2,7 @@ package kr.sprouts.framework.library.security.credential.codec;
 
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
+
 import java.util.function.Supplier;
 
 public enum CodecType {

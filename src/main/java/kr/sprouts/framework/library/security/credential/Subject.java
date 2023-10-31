@@ -1,6 +1,7 @@
 package kr.sprouts.framework.library.security.credential;
 
 import jakarta.validation.constraints.NotNull;
+
 import java.util.UUID;
 
 public class Subject {

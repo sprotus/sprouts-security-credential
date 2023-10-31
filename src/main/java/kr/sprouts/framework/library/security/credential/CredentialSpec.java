@@ -1,8 +1,7 @@
 package kr.sprouts.framework.library.security.credential;
 
-import kr.sprouts.framework.library.validation.constraints.annotation.Uuid;
-
 import jakarta.validation.constraints.NotBlank;
+import kr.sprouts.framework.library.validation.constraints.annotation.Uuid;
 
 class CredentialSpec {
     @Uuid
