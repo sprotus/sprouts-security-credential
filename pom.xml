@@ -22,7 +22,7 @@
     <bouncycastle.version>1.70</bouncycastle.version>
     <hibernate.validator.version>6.2.5.Final</hibernate.validator.version>
     <javax.el.version>3.0.0</javax.el.version>
-    <junit.jupiter.version>5.9.3</junit.jupiter.version>
+    <junit.jupiter.version>5.10.0</junit.jupiter.version>
   </properties>
   <repositories>
     <!-- personal-repository -->
